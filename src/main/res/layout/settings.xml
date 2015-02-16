@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
 >
+    <!-- Event Notifications -->
     <RelativeLayout
         android:id="@+id/settings_event_notification"
         android:layout_width="match_parent"
@@ -36,6 +37,8 @@
             android:text="@string/settings_event_notifications"
         />
     </RelativeLayout>
+
+    <!-- Generate Upcoming Event -->
     <RelativeLayout
         android:id="@+id/settings_event_generate"
         android:layout_width="match_parent"
@@ -68,6 +71,41 @@
             android:text="@string/settings_event_generate"
         />
     </RelativeLayout>
+
+    <!-- Drop Data -->
+    <RelativeLayout
+        android:id="@+id/settings_drop_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/background"
+        android:padding="8dp"
+    >
+        <Button
+            android:id="@+id/settings_drop_data_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/settings_drop_data_button"
+        />
+        <TextView
+            style="@style/body1"
+            android:id="@+id/settings_drop_data_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/settings_drop_data_button"
+            android:layout_toLeftOf="@id/settings_drop_data_button"
+            android:text="@string/settings_drop_data"
+        />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/settings_version"
         android:layout_width="match_parent"

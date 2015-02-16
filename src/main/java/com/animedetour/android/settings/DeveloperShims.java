@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.settings;
 
+import com.animedetour.android.database.LocalDatabase;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.api.sched.api.model.Event;
@@ -32,6 +33,7 @@ public class DeveloperShims
 {
     final private EventRepository eventData;
     final private FavoriteRepository favoriteData;
+    final private LocalDatabase database;
     final private Log logger;
     final private Random random = new Random();
 
@@ -39,10 +41,12 @@ public class DeveloperShims
     public DeveloperShims(
         EventRepository eventData,
         FavoriteRepository favoriteData,
+        LocalDatabase database,
         Log logger
     ) {
         this.eventData = eventData;
         this.favoriteData = favoriteData;
+        this.database = database;
         this.logger = logger;
     }
 
@@ -67,6 +71,18 @@ public class DeveloperShims
             this.favoriteData.create(event);
         } catch (SQLException e) {
             this.logger.error("Error when saving event: " + event, e);
+        }
+    }
+
+    /**
+     * Drop all local databases.
+     */
+    public void dropData()
+    {
+        try {
+            this.database.truncateAll();
+        } catch (SQLException e) {
+            this.logger.error("Could not drop database", e);
         }
     }
 }

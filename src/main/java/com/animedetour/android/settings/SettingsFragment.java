@@ -45,7 +45,7 @@ final public class SettingsFragment extends Fragment
     /**
      * Settings that should only be displayed to developers.
      */
-    @InjectViews({R.id.settings_event_generate})
+    @InjectViews({R.id.settings_event_generate, R.id.settings_drop_data})
     View[] developerViews;
 
     @InjectView(R.id.settings_event_notification_switch)
@@ -116,6 +116,16 @@ final public class SettingsFragment extends Fragment
     {
         this.developerShims.addFakeUpcomingEvent();
         Toast.makeText(this.getActivity(), "Event scheduled!", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Developer setting: Drop all local data.
+     */
+    @OnClick(R.id.settings_drop_data_button)
+    public void dropData()
+    {
+        this.developerShims.dropData();
+        Toast.makeText(this.getActivity(), "Local Data dropped!", Toast.LENGTH_SHORT).show();
     }
 
     /**

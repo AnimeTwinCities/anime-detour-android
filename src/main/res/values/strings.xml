@@ -27,6 +27,8 @@
     <string name="settings_event_notifications">Event Notifications</string>
     <string name="settings_event_generate_button">Generate</string>
     <string name="settings_event_generate">New upcoming event</string>
+    <string name="settings_drop_data_button">Drop</string>
+    <string name="settings_drop_data">Local Database</string>
     <string name="settings_application_version">Application version %1$s build %2$s</string>
     <string name="map_control_first_floor">1</string>
     <string name="map_control_second_floor">2</string>

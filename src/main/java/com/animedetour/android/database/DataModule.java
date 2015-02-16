@@ -41,13 +41,11 @@ import java.sql.SQLException;
 @SuppressWarnings("UnusedDeclaration")
 final public class DataModule
 {
-    @Provides @Singleton
-    EventRepository provideEventRepository(
-        DetourDatabaseHelper helper,
+    @Provides @Singleton EventRepository provideEventRepository(
+        ConnectionSource connectionSource,
         ScheduleEndpoint remote,
         Log logger
     ) {
-        ConnectionSource connectionSource = new AndroidConnectionSource(helper);
         SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(logger);
 
         try {
@@ -67,13 +65,11 @@ final public class DataModule
         }
     }
 
-    @Provides @Singleton
-    GuestRepository provideGuestRepository(
-        DetourDatabaseHelper helper,
+    @Provides @Singleton GuestRepository provideGuestRepository(
+        ConnectionSource connectionSource,
         GuestEndpoint remote,
         Log logger
     ) {
-        ConnectionSource connectionSource = new AndroidConnectionSource(helper);
         SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(logger);
 
         try {
@@ -89,10 +85,8 @@ final public class DataModule
     }
 
     @Provides @Singleton FavoriteRepository provideGuestRepository(
-        DetourDatabaseHelper helper
+        ConnectionSource connectionSource
     ) {
-        ConnectionSource connectionSource = new AndroidConnectionSource(helper);
-
         try {
             Dao<Favorite, Integer> local = DaoManager.createDao(connectionSource, Favorite.class);
             GetAllFavoritesWorker collectionWorker = new GetAllFavoritesWorker(local);
@@ -107,5 +101,11 @@ final public class DataModule
         Application context
     ) {
         return new DetourDatabaseHelper(context);
+    }
+
+    @Provides @Singleton ConnectionSource provideConnectionSource(
+        DetourDatabaseHelper helper
+    ) {
+        return new AndroidConnectionSource(helper);
     }
 }
