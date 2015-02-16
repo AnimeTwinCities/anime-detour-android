@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <Button
+        android:id="@+id/map_control_first_floor"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/map_control_first_floor"
+    />
+    <Button
+        android:id="@+id/map_control_second_floor"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_first_floor"
+        android:text="@string/map_control_second_floor"
+    />
+    <Button
+        android:id="@+id/map_control_22nd_floor"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_second_floor"
+        android:text="@string/map_control_22nd_floor"
+    />
+</RelativeLayout>

@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,122 +12,80 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.maps.android.ui.IconGenerator;
 
-import java.util.ArrayList;
-
-import static com.animedetour.android.map.HotelMapPoints.*;
+import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
 
 /**
- * Google Maps display with Hotel points overlayed.
+ * Google Maps display with Hotel floor plans overlayed.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 final public class HotelMapFragment extends SupportMapFragment
 {
-    private ArrayList<Marker> markers = new ArrayList<>();
+    @InjectView(R.id.map_control_first_floor)
+    Button switchFirstFloor;
+
+    @InjectView(R.id.map_control_second_floor)
+    Button switchSecondFloor;
+
+    @InjectView(R.id.map_control_22nd_floor)
+    Button switch22ndFloor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+        View mapView = super.onCreateView(inflater, container, savedInstanceState);
+        View controlView = inflater.inflate(R.layout.map_controls, container, false);
+        FrameLayout composite = new FrameLayout(this.getActivity());
+        composite.addView(mapView);
+        composite.addView(controlView);
+
+        return composite;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.inject(this, view);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
         this.resetMap();
-        this.showFloor1();
-
-        return view;
-    }
-
-    private void showFloor1()
-    {
-        this.showPanelRoom(PLAZA_1);
-        this.showRoomLabel(PLAZA_1_CENTER, "Plaza 1");
-        this.showPanelRoom(PLAZA_2);
-        this.showRoomLabel(PLAZA_2_CENTER, "Plaza 2");
-        this.showPanelRoom(PLAZA_3);
-        this.showRoomLabel(PLAZA_3_CENTER, "Plaza 3");
-        this.showPanelRoom(PLAZA_4);
-        // WHERE'S PLAZA 5?!?!
-        this.showPanelRoom(PLAZA_6);
-    }
-
-    private void hideMarkers()
-    {
-        for (Marker options : markers) {
-            options.setVisible(false);
-        }
-    }
-
-    private void showMarkers()
-    {
-        for (Marker options : markers) {
-            options.setVisible(true);
-        }
+        this.centerMap();
+        this.showFirstFloor();
     }
 
     /**
-     * Display a label on the map at a given position.
-     *
-     * The label will added to the list of markers to be hidden when the map is
-     * zoomed out.
-     *
-     * @param position Point to center the label at.
-     * @param label The text to display on the map.
+     * Center the map camera on the hotel and zoom appropriately.
      */
-    private void showRoomLabel(LatLng position, String label)
+    private void centerMap()
     {
-        IconGenerator iconGenerator = new IconGenerator(this.getActivity());
         GoogleMap map = this.getMap();
-
-        iconGenerator.setTextAppearance(R.style.caption);
-        iconGenerator.setBackground(null);
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon(label));
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(position);
-        markerOptions.title(label);
-        markerOptions.anchor(
-            iconGenerator.getAnchorU(),
-            iconGenerator.getAnchorV()
+        CameraUpdate camera = CameraUpdateFactory.newCameraPosition(
+            new CameraPosition.Builder().target(HOTEL_CENTER).zoom(18F).tilt(0).bearing(180).build()
         );
-        markerOptions.icon(icon);
-        Marker marker = map.addMarker(markerOptions);
-        this.markers.add(marker);
+        map.moveCamera(camera);
     }
 
     /**
-     * Display a polygon as a "panel room" by drawing it's borders.
-     *
-     * @param points The points of the room's polygon to draw
-     */
-    private void showPanelRoom(LatLng[] points)
-    {
-        int primaryColor = this.getResources().getColor(R.color.primary_highlight);
-        int strokeColor = this.getResources().getColor(R.color.primary_dim);
-        GoogleMap map = this.getMap();
-
-        PolygonOptions roomOptions = new PolygonOptions();
-        roomOptions.add(points);
-        roomOptions.strokeColor(strokeColor);
-        roomOptions.strokeWidth(4);
-        roomOptions.fillColor(primaryColor);
-        map.addPolygon(roomOptions);
-    }
-
-    /**
-     * Clear the map and re-draw the base hotel.
+     * Reset any overlays from the map so we can draw new floors.
      */
     private void resetMap()
     {
@@ -136,27 +94,45 @@ final public class HotelMapFragment extends SupportMapFragment
         map.setBuildingsEnabled(true);
         map.setIndoorEnabled(false);
         map.getUiSettings().setTiltGesturesEnabled(false);
+        map.getUiSettings().setRotateGesturesEnabled(false);
+        map.getUiSettings().setCompassEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(false);
 
-        CameraUpdate camera = CameraUpdateFactory.newCameraPosition(
-            new CameraPosition.Builder().target(HOTEL_CENTER).zoom(17.3f).tilt(0f).build()
-        );
-        map.moveCamera(camera);
+        this.switchFirstFloor.setEnabled(true);
+        this.switchSecondFloor.setEnabled(true);
+        this.switch22ndFloor.setEnabled(true);
+    }
 
-        PolygonOptions buildingOptions = new PolygonOptions();
-        buildingOptions.add(HOTEL_BASE);
-        buildingOptions.strokeWidth(0);
-        int baseColor = this.getResources().getColor(R.color.primary_highlight);
-        buildingOptions.fillColor(baseColor);
-        map.addPolygon(buildingOptions);
+    /**
+     * Clear the map and draw the first floor map.
+     */
+    @OnClick(R.id.map_control_first_floor)
+    public void showFirstFloor()
+    {
+        this.resetMap();
+        this.switchFirstFloor.setEnabled(false);
+        this.getMap().addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
+    }
 
-        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override public void onCameraChange(CameraPosition cameraPosition) {
-                if (cameraPosition.zoom > 18.5) {
-                    showMarkers();
-                } else {
-                    hideMarkers();
-                }
-            }
-        });
+    /**
+     * Clear the map and draw the second floor map.
+     */
+    @OnClick(R.id.map_control_second_floor)
+    public void showSecondFloor()
+    {
+        this.resetMap();
+        this.switchSecondFloor.setEnabled(false);
+        this.getMap().addGroundOverlay(HotelMapPoints.getSecondFloorOverlay());
+    }
+
+    /**
+     * Clear the map and draw the 22nd floor map.
+     */
+    @OnClick(R.id.map_control_22nd_floor)
+    public void show22ndFloor()
+    {
+        this.resetMap();
+        this.switch22ndFloor.setEnabled(false);
+        this.getMap().addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
     }
 }
