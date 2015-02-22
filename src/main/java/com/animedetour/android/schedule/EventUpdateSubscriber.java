@@ -8,10 +8,10 @@
  */
 package com.animedetour.android.schedule;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ListView;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
+import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
 import rx.Subscriber;
 
@@ -33,7 +33,9 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
     final private View emptyView;
 
     /** The list view we're to put events into. */
-    final private SimpleRecyclerView<PanelView, Event> panelList;
+    final private ListView panelList;
+
+    final private ItemAdapter<PanelView, Event> itemAdapter;
 
     /**
      * Scroll position state.
@@ -56,11 +58,13 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
     private boolean restored = false;
 
     public EventUpdateSubscriber(
-        SimpleRecyclerView<PanelView, Event> panelList,
+        ListView panelList,
+        ItemAdapter<PanelView, Event> listAdapter,
         View emptyView,
         Log logger
     ) {
         this.panelList = panelList;
+        this.itemAdapter = listAdapter;
         this.emptyView = emptyView;
         this.logger = logger;
     }
@@ -80,7 +84,7 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
     public void onNext(List<Event> events)
     {
         this.toggleEmptyView(events.isEmpty());
-        this.panelList.getItemAdapter().setItems(events);
+        this.itemAdapter.setItems(events);
 
         if (false == events.isEmpty()) {
             this.restoreState();
@@ -111,18 +115,17 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
         }
 
         this.restored = true;
-        this.panelList.scrollToPosition(this.scrollPosition);
+        this.panelList.smoothScrollToPosition(this.scrollPosition);
     }
 
     /**
      * Get the current position of the event list view.
      *
      * @return The first visible item position in the list.
-     * @todo refactor this unchecked cast.
      */
     final public int getScrollPosition()
     {
-        return ((LinearLayoutManager) this.panelList.getLayoutManager()).findFirstVisibleItemPosition();
+        return this.panelList.getFirstVisiblePosition();
     }
 
     /**
@@ -135,7 +138,7 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
      */
     public void setScrollPosition(int scrollPosition)
     {
-        this.panelList.scrollToPosition(scrollPosition);
+        this.panelList.smoothScrollToPosition(scrollPosition);
         this.scrollPosition = scrollPosition;
     }
 }

@@ -9,8 +9,9 @@
 package com.animedetour.android.schedule;
 
 import android.view.View;
+import android.widget.ListView;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
+import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
@@ -36,9 +37,10 @@ public class EventSubscriberFactory
     }
 
     public EventUpdateSubscriber create(
-        SimpleRecyclerView<PanelView, Event> panelList,
+        ListView panelList,
+        ItemAdapter<PanelView, Event> listAdapter,
         View emptyView
     ) {
-        return new EventUpdateSubscriber(panelList, emptyView, this.logger);
+        return new EventUpdateSubscriber(panelList, listAdapter, emptyView, this.logger);
     }
 }

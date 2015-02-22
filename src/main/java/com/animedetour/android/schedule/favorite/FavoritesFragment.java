@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
@@ -24,6 +25,7 @@ import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -52,7 +54,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     Log logger;
 
     @InjectView(R.id.panel_list)
-    SimpleRecyclerView<PanelView, Favorite> panelList;
+    ListView panelList;
 
     @Icicle
     int scrollPosition = 0;
@@ -62,6 +64,8 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
 
     @Inject
     SubscriptionManager subscriptionManager;
+
+    private ItemAdapter<PanelView, Favorite> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -108,12 +112,10 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
      */
     protected void setupPanelList()
     {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-
         EventViewBinder eventViewBinder = new EventViewBinder(this.getActivity(), this);
-        this.panelList.init(new ArrayList<Favorite>(), new FavoriteViewBinder(eventViewBinder));
-        this.panelList.setLayoutManager(layoutManager);
-        this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
+        FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(eventViewBinder);
+        this.adapter = new ItemAdapter<>(favoriteViewBinder);
+        this.panelList.setAdapter(adapter);
 
         Subscription favoriteSubscription = this.favoriteData.findAll(
             new FavoriteUpdateSubscriber(this, this.panelEmptyView, this.logger)
@@ -128,11 +130,11 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
      */
     public void updateEvents(List<Favorite> events)
     {
-        if (this.panelList.getAdapter().getItemCount() != 0) {
+        if (this.panelList.getAdapter().getCount() != 0) {
             this.syncScrollPosition();
         }
 
-        this.panelList.getItemAdapter().setItems(events);
+        this.adapter.setItems(events);
         this.panelList.setVerticalScrollbarPosition(this.scrollPosition);
     }
 
