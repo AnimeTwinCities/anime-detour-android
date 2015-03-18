@@ -12,19 +12,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
+import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import icepick.Icicle;
 import org.joda.time.DateTime;
 import rx.Subscription;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 
 /**
  * Day schedule fragment
@@ -48,7 +48,7 @@ final public class DayFragment extends Fragment
     EventViewBinder viewBinder;
 
     @InjectView(R.id.panel_list)
-    SimpleRecyclerView<PanelView, Event> panelList;
+    ListView panelList;
 
     @InjectView(R.id.panel_empty_view)
     View panelEmptyView;
@@ -81,8 +81,10 @@ final public class DayFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        this.panelList.init(new ArrayList<Event>(), this.viewBinder);
-        this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, this.panelEmptyView);
+
+        ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
+        this.panelList.setAdapter(adapter);
+        this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
     }
 
     @Override
