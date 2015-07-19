@@ -10,7 +10,7 @@ package com.animedetour.android.schedule.serach;
 
 import android.support.v7.widget.SearchView;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import rx.Observer;
 
 import java.util.List;

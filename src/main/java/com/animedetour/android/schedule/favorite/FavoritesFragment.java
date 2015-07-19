@@ -10,9 +10,7 @@ package com.animedetour.android.schedule.favorite;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.Bind;
 import com.animedetour.android.R;
@@ -23,7 +21,7 @@ import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -31,6 +29,7 @@ import icepick.Icicle;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -45,7 +44,8 @@ import java.util.List;
  */
 @DisplayName(R.string.favorites_title)
 @LogName("Favorites")
-final public class FavoritesFragment extends BaseFragment implements ViewClickListener<PanelView, Event>
+@Layout(R.layout.schedule_day)
+final public class FavoritesFragment extends BaseFragment
 {
     @Inject
     FavoriteRepository favoriteData;
@@ -66,17 +66,12 @@ final public class FavoritesFragment extends BaseFragment implements ViewClickLi
     SubscriptionManager subscriptionManager;
 
     @Inject
+    EventViewBinder eventViewBinder;
+
+    @Inject
     EventPalette palette;
 
     private ItemAdapter<PanelView, Favorite> adapter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.schedule_day, container, false);
-
-        return view;
-    }
 
     @Override
     public void onStart()
@@ -101,22 +96,12 @@ final public class FavoritesFragment extends BaseFragment implements ViewClickLi
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onViewClicked(Event selected, PanelView view)
-    {
-        this.logger.trace(EventFactory.eventDetails(selected));
-
-        Intent intent = EventActivity.createIntent(this.getActivity(), selected);
-        this.startActivity(intent);
-    }
-
     /**
      * Setup the panel list view handlers and data request/subscriptions.
      */
     protected void setupPanelList()
     {
-        EventViewBinder eventViewBinder = new EventViewBinder(this.getActivity(), this.palette, this);
-        FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(eventViewBinder);
+        FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(this.eventViewBinder);
         this.adapter = new ItemAdapter<>(favoriteViewBinder);
         this.panelList.setAdapter(adapter);
 

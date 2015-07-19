@@ -25,6 +25,7 @@ import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
 import monolog.LogName;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 
 import javax.inject.Inject;
 
@@ -40,6 +41,7 @@ import javax.inject.Inject;
  */
 @DisplayName(R.string.settings_title)
 @LogName("Settings")
+@Layout(R.layout.settings)
 final public class SettingsFragment extends BaseFragment
 {
     /**
@@ -70,14 +72,6 @@ final public class SettingsFragment extends BaseFragment
 
     @Inject
     DeveloperShims developerShims;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.settings, container, false);
-
-        return view;
-    }
 
     @Override
     public void onStart()

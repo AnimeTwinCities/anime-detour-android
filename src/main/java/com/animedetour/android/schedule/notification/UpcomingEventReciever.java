@@ -17,7 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.animedetour.android.R;
 import com.animedetour.android.schedule.EventActivity;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 
 /**
  * Handles incoming intents for scheduled event notifications.

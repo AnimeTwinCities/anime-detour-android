@@ -13,11 +13,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.sql.SQLException;
 
 /**
@@ -29,11 +31,13 @@ import java.sql.SQLException;
  * @todo BEFORE ANY MORE UPGRADES TO FAVORITES - a migration setup must be made.
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Singleton
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
     private static final int DATABASE_VERSION = 6;
 
+    @Inject
     public DetourDatabaseHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -10,7 +10,7 @@ package com.animedetour.android.home;
 
 import android.view.View;
 import com.animedetour.android.view.scrim.ImageScrim;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 import rx.Observer;
 

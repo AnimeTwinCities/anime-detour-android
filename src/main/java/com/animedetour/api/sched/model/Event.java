@@ -6,9 +6,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.api.sched.api.model;
+package com.animedetour.api.sched.model;
 
-import com.animedetour.api.sched.api.deserialization.PanelDateDeserializer;
+import com.animedetour.api.sched.deserialization.PanelDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.j256.ormlite.field.DataType;

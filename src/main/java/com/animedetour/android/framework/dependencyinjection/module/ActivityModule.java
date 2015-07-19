@@ -16,20 +16,17 @@ import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.DayFragment;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.serach.EventSearchActivity;
-import com.animedetour.android.schedule.ScheduleModule;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
 import dagger.Module;
 
 @Module(
-    includes = {
-        ScheduleModule.class
-    },
     injects = {
         MainActivity.class,
         EventActivity.class,
         GuestDetailActivity.class,
+        EventSearchActivity.class,
 
         HomeFragment.class,
         DayFragment.class,
@@ -38,7 +35,6 @@ import dagger.Module;
         FavoritesFragment.class,
         SettingsFragment.class,
         HotelMapFragment.class,
-        EventSearchActivity.class,
     },
     complete = false,
     library = true

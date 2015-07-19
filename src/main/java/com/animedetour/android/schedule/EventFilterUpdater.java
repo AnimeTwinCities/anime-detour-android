@@ -9,14 +9,12 @@
 package com.animedetour.android.schedule;
 
 import com.animedetour.android.main.NavigationSubContentUpdate;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.squareup.otto.Bus;
 import monolog.Monolog;
 import rx.Observer;
 
 import javax.inject.Inject;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;

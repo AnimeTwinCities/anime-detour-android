@@ -20,7 +20,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.LogName;
 import prism.framework.Layout;

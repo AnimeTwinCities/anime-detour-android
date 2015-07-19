@@ -9,7 +9,7 @@
 package com.animedetour.android.analytics;
 
 import com.animedetour.api.guest.model.Guest;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.handler.analytics.TrackedEvent;
 
 /**

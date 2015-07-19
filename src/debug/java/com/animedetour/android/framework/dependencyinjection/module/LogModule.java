@@ -28,11 +28,13 @@ import javax.inject.Singleton;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Module(library = true, complete = false)
+@SuppressWarnings("UnusedDeclaration")
 public class LogModule
 {
-    @Provides @Singleton Monolog provideLogger(
-        Resources resources
-    ) {
+    @Provides
+    @Singleton
+    public Monolog provideLogger(Resources resources)
+    {
         Handler[] handlers = new Handler[] {
             new ConsoleHandler("AnimeDetour", LogLevel.ALL),
             new CrashyHandler(new LogLevel[] { LogLevel.ERROR, LogLevel.FATAL}),

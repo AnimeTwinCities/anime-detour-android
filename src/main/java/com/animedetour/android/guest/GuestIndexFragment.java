@@ -23,6 +23,7 @@ import com.inkapplications.groundcontrol.SubscriptionManager;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
  */
 @DisplayName(R.string.guests_title)
 @LogName("Guests")
+@Layout(R.layout.guest_category_index)
 public class GuestIndexFragment extends BaseFragment
 {
     @Inject
@@ -51,14 +53,6 @@ public class GuestIndexFragment extends BaseFragment
 
     @Inject
     SubscriptionManager subscriptionManager;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.guest_category_index, container, false);
-
-        return view;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)

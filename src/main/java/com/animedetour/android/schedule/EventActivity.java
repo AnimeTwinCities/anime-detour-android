@@ -30,7 +30,7 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;

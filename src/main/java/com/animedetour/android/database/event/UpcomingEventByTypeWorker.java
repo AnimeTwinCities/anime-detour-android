@@ -8,8 +8,8 @@
  */
 package com.animedetour.android.database.event;
 
-import com.animedetour.api.sched.api.ScheduleEndpoint;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.ScheduleEndpoint;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;

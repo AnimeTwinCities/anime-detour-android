@@ -11,7 +11,7 @@ package com.animedetour.android.schedule;
 import android.app.Activity;
 import android.content.Intent;
 import com.animedetour.android.analytics.EventFactory;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import monolog.Monolog;
 

@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.schedule.EventActivity;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 
 /**

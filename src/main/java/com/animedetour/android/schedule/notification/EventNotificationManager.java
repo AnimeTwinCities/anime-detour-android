@@ -16,7 +16,7 @@ import android.os.Bundle;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.settings.PreferenceManager;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 import org.joda.time.DateTime;
 

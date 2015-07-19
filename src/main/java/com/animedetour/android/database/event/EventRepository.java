@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.database.event;
 
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
 import com.inkapplications.groundcontrol.SubscriptionFactory;
 import com.inkapplications.groundcontrol.Worker;

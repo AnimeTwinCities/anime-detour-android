@@ -8,7 +8,6 @@
  */
 package com.animedetour.android.database;
 
-import android.app.Application;
 import com.animedetour.android.database.event.AllEventsByDayFactory;
 import com.animedetour.android.database.event.AllEventsMatchingFactory;
 import com.animedetour.android.database.event.AllEventsWorker;
@@ -24,8 +23,8 @@ import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
-import com.animedetour.api.sched.api.ScheduleEndpoint;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.ScheduleEndpoint;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.groundcontrol.SubscriptionFactory;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
@@ -45,7 +44,9 @@ import java.sql.SQLException;
 @SuppressWarnings("UnusedDeclaration")
 final public class DataModule
 {
-    @Provides @Singleton EventRepository provideEventRepository(
+    @Provides
+    @Singleton
+    public EventRepository eventRepository(
         ConnectionSource connectionSource,
         ScheduleEndpoint remote,
         Monolog logger
@@ -72,7 +73,9 @@ final public class DataModule
         }
     }
 
-    @Provides @Singleton GuestRepository provideGuestRepository(
+    @Provides
+    @Singleton
+    public GuestRepository guestRepository(
         ConnectionSource connectionSource,
         GuestEndpoint remote,
         Monolog logger
@@ -93,9 +96,10 @@ final public class DataModule
         }
     }
 
-    @Provides @Singleton FavoriteRepository provideGuestRepository(
-        ConnectionSource connectionSource
-    ) {
+    @Provides
+    @Singleton
+    public FavoriteRepository favoriteRepository(ConnectionSource connectionSource)
+    {
         try {
             Dao<Favorite, Integer> local = DaoManager.createDao(connectionSource, Favorite.class);
             Dao<Event, Integer> eventLocal = DaoManager.createDao(connectionSource, Event.class);
@@ -107,15 +111,10 @@ final public class DataModule
         }
     }
 
-    @Provides @Singleton DetourDatabaseHelper provideHelper(
-        Application context
-    ) {
-        return new DetourDatabaseHelper(context);
-    }
-
-    @Provides @Singleton ConnectionSource provideConnectionSource(
-        DetourDatabaseHelper helper
-    ) {
+    @Provides
+    @Singleton
+    public ConnectionSource connectionSource(DetourDatabaseHelper helper)
+    {
         return new AndroidConnectionSource(helper);
     }
 }

@@ -46,9 +46,12 @@ import java.io.File;
     complete = false,
     library = true
 )
+@SuppressWarnings("UnusedDeclaration")
 final public class ApplicationModule
 {
-    @Provides @Singleton Tracker provideAnalytics(Application context)
+    @Provides
+    @Singleton
+    public Tracker analyticsTracker(Application context)
     {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         Tracker tracker = analytics.newTracker(R.xml.google_analytics);
@@ -57,28 +60,37 @@ final public class ApplicationModule
         return tracker;
     }
 
-    @Provides @Singleton AlarmManager provideAlarmManager(
-        Application context
-    ) {
+    @Provides
+    @Singleton
+    public AlarmManager alarmManager(Application context)
+    {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    @Provides @Singleton SubscriptionManager provideSubscriptionManager()
+    @Provides
+    @Singleton
+    public SubscriptionManager subscriptionManager()
     {
         return new SubscriptionManager();
     }
 
-    @Provides @Singleton Bus provideBus()
+    @Provides
+    @Singleton
+    public Bus bus()
     {
         return new Bus();
     }
 
-    @Provides @Singleton RefWatcher provideRefWatcher(Application application)
+    @Provides
+    @Singleton
+    public RefWatcher refWatcher(Application application)
     {
         return LeakCanary.install(application);
     }
 
-    @Provides @Singleton Cache provideCache(Application application)
+    @Provides
+    @Singleton
+    public Cache cache(Application application)
     {
         File cacheDir = new File(application.getCacheDir(), "http");
         long cacheSize = 80 * 1024 * 1024; // 80MB

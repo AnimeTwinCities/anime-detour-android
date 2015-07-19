@@ -9,7 +9,7 @@
 package com.animedetour.android.schedule.serach;
 
 import android.view.View;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.Monolog;
 import rx.Observer;

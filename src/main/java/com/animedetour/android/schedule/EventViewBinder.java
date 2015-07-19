@@ -10,25 +10,26 @@ package com.animedetour.android.schedule;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
-import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Binds Events to the displayed Panel View.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Singleton
 public class EventViewBinder implements ItemViewBinder<PanelView, Event>
 {
     /** Context to be used when creating new panel views. */
     private Context context;
 
     /** Listener to invoke when a panel view is clicked. */
-    private ViewClickListener<PanelView, Event> clickListener;
+    private PanelViewController clickListener;
 
     /** For creating the label colors on events. */
     private EventPalette eventPalette;
@@ -41,7 +42,7 @@ public class EventViewBinder implements ItemViewBinder<PanelView, Event>
     public EventViewBinder(
         Context context,
         EventPalette eventPalette,
-        ViewClickListener<PanelView, Event> clickListener
+        PanelViewController clickListener
     ) {
         this.context = context;
         this.eventPalette = eventPalette;

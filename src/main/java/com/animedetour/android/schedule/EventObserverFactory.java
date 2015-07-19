@@ -10,7 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.view.View;
 import android.widget.ListView;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.Monolog;
 

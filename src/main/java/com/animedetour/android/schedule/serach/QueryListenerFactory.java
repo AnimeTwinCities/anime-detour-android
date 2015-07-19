@@ -11,7 +11,7 @@ package com.animedetour.android.schedule.serach;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 
 import javax.inject.Inject;

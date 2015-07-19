@@ -30,6 +30,7 @@ import javax.inject.Singleton;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Module(library = true, complete = false)
+@SuppressWarnings("UnusedDeclaration")
 public class LogModule
 {
     @Provides @Singleton

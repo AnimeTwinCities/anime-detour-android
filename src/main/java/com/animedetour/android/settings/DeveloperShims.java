@@ -11,7 +11,7 @@ package com.animedetour.android.settings;
 import com.animedetour.android.database.LocalDatabase;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 import org.joda.time.DateTime;
 

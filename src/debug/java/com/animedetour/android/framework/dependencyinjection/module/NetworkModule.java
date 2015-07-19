@@ -22,7 +22,9 @@ import javax.inject.Singleton;
 @SuppressWarnings("UnusedDeclaration")
 public class NetworkModule
 {
-    @Provides @Singleton OkHttpClient provideOkHttp(
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttp(
         Application application,
         Cache cache,
         NetworkSlowdown slowdownInterceptor

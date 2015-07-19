@@ -10,12 +10,10 @@ package com.animedetour.android.schedule;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.Bind;
 import com.animedetour.android.R;
@@ -24,12 +22,13 @@ import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.main.SpinnerOptionContainer;
 import com.animedetour.android.main.SubNavigationSelectionChange;
 import com.animedetour.android.schedule.serach.EventSearchActivity;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.otto.Subscribe;
 import icepick.Icicle;
 import org.joda.time.DateTime;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -41,6 +40,7 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Layout(R.layout.schedule_day)
 final public class DayFragment extends BaseFragment
 {
     @Inject
@@ -74,14 +74,6 @@ final public class DayFragment extends BaseFragment
     public DayFragment(DateTime day)
     {
         this.day = day;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.schedule_day, container, false);
-
-        return view;
     }
 
     @Override
