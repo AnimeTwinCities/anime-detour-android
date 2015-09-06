@@ -14,7 +14,7 @@ This project requires Java 1.7 and the Android SDK including:
  * Google Repository
  * Google Play Services
 
-Installing
+Installing????????
 ----------
 
 The release version of the application requires you to set a keystore password
