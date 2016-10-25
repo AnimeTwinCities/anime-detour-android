@@ -47,8 +47,6 @@
     <string name="event_search_no_results_description">No events found with that title</string>
     <string name="guest_empty_subhead">Guests will show here.</string>
     <string name="event_age_warning">Parts of this event may be restricted to %s \nYou may be required to show your ID before entering.</string>
-    <string name="missing_google_play_services_error_message">Oh no! We can\'t show you this map, since you don\'t have Google Play Services!</string>
-    <string name="google_play_services_button_label">Get Google Play Services</string>
     <string name="off_season_headline">Join Us Next Year!</string>
     <string name="atc_link">More Events</string>
     <string name="register_action">Register</string>

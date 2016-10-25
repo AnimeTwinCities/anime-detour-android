@@ -40,31 +40,4 @@
         android:layout_below="@id/map_control_22nd_floor"
         android:text="@string/map_control_sheraton"
     />
-
-    <LinearLayout
-        android:id="@+id/map_missing_services_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/foreground_inverse"
-            android:text="@string/missing_google_play_services_error_message"/>
-
-        <Button
-            android:id="@+id/get_services_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/google_play_services_button_label"/>
-
-    </LinearLayout>
-
 </RelativeLayout>

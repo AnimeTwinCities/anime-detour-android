@@ -8,18 +8,16 @@
  */
 package com.animedetour.android.map;
 
-import android.app.PendingIntent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.animedetour.android.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,16 +25,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.PrismFacade;
+
+import javax.inject.Inject;
 
 import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
 import static com.animedetour.android.map.HotelMapPoints.SHERATON_CENTER;
@@ -50,7 +44,6 @@ import static com.animedetour.android.map.HotelMapPoints.SHERATON_CENTER;
 @LogName("Map")
 final public class HotelMapFragment extends SupportMapFragment implements OnMapReadyCallback
 {
-
     @Bind(R.id.map_control_first_floor)
     Button switchFirstFloor;
 
@@ -63,50 +56,19 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     @Bind(R.id.map_control_sheraton)
     Button switchSheraton;
 
-    @Bind(R.id.map_missing_services_view)
-    LinearLayout missingGooglePlayServicesLayout;
-
     @Inject
     Monolog logger;
-
-    private int googlePlayServicesStatusCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        FrameLayout composite = new FrameLayout(this.getActivity());
-        if (this.isGooglePlayServicesPresent()) {
-            View mapView = super.onCreateView(inflater, container, savedInstanceState);
-            composite.addView(mapView);
-        }
+        View mapView = super.onCreateView(inflater, container, savedInstanceState);
         View controlView = inflater.inflate(R.layout.map_controls, container, false);
+        FrameLayout composite = new FrameLayout(this.getActivity());
+        composite.addView(mapView);
         composite.addView(controlView);
 
         return composite;
-    }
-
-    /**
-     * Check if the device has Google Play Services installed
-     *
-     * @return true if it's installed.
-     */
-    private boolean isGooglePlayServicesPresent() {
-        this.googlePlayServicesStatusCode =
-                GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-        return this.googlePlayServicesStatusCode == ConnectionResult.SUCCESS;
-    }
-
-    /**
-     * Hide map controls and show the informational layout for
-     * installing Play Services.
-     */
-    private void setupUIForMissingPlayServices() {
-        this.switchFirstFloor.setVisibility(View.GONE);
-        this.switchSecondFloor.setVisibility(View.GONE);
-        this.switch22ndFloor.setVisibility(View.GONE);
-        this.switchSheraton.setVisibility(View.GONE);
-
-        this.missingGooglePlayServicesLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -116,10 +78,6 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
 
         PrismFacade.bootstrap(this);
         ButterKnife.bind(this, view);
-
-        if (!this.isGooglePlayServicesPresent()) {
-            this.setupUIForMissingPlayServices();
-        }
         this.logger.trace(this);
     }
 
@@ -239,19 +197,5 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         this.resetMap(map);
         this.switchSheraton.setEnabled(false);
         map.addGroundOverlay(HotelMapPoints.getSheratonOverlay());
-    }
-
-    @OnClick(R.id.get_services_button)
-    public void onGetGooglePlayServicesClicked() {
-        try {
-            // Perform the correct action for the given status
-            // code!
-            if (GooglePlayServicesUtil.isUserRecoverableError(this.googlePlayServicesStatusCode)) {
-                GooglePlayServicesUtil.getErrorPendingIntent(
-                        this.googlePlayServicesStatusCode, getActivity(), 0).send();
-            }
-        } catch (PendingIntent.CanceledException e1) {
-            // Pass
-        }
     }
 }
