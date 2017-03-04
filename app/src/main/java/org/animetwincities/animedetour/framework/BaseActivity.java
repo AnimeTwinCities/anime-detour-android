@@ -9,8 +9,11 @@ import org.animetwincities.animedetour.framework.dependencyinjection.ActivityCom
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerActivityComponentAware;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
+import org.animetwincities.animedetour.framework.stopwatch.LimitTimer;
+import org.animetwincities.animedetour.framework.stopwatch.TimerFactory;
 
 import javax.inject.Inject;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Boilerplate activity pre-configured to run framework utilities.
@@ -23,14 +26,19 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     @Inject
     Logger logger;
 
+    @Inject
+    TimerFactory timerFactory;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         this.initializeInjections();
+        LimitTimer timer = this.timerFactory.startForLimit("Activity Initialize", 500, TimeUnit.MILLISECONDS);
         this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
         LayoutInjector.injectContentView(this);
+        timer.finish();
     }
 
     @Override
