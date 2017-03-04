@@ -6,7 +6,11 @@ import dagger.Module;
 import dagger.Provides;
 import inkapplicaitons.android.logger.EmptyLogger;
 import inkapplicaitons.android.logger.Logger;
+import okhttp3.Interceptor;
 import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Defines Debug-only Services.
@@ -32,5 +36,12 @@ public class DebugModule
     public ApplicationLifecycleSubscriber getDebugApplicationSubscribers()
     {
         return new ApplicationCallbacks(/* Keep blank! No new code for release mode! */);
+    }
+
+    @Provides
+    @AvailableInDebug
+    List<Interceptor> getDebugOkHttpInterceptors()
+    {
+        return Collections.emptyList();
     }
 }
