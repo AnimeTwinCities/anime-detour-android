@@ -1,5 +1,7 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
+import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
+import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
 import dagger.Module;
 import dagger.Provides;
 import inkapplicaitons.android.logger.EmptyLogger;
@@ -23,5 +25,12 @@ public class DebugModule
     public Logger getLogger()
     {
         return new EmptyLogger();
+    }
+
+    @Provides
+    @AvailableInDebug
+    public ApplicationLifecycleSubscriber getDebugApplicationSubscribers()
+    {
+        return new ApplicationCallbacks(/* Keep blank! No new code for release mode! */);
     }
 }

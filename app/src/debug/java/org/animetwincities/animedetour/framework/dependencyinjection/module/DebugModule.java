@@ -1,10 +1,12 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
+import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
 import dagger.Module;
 import dagger.Provides;
 import inkapplicaitons.android.logger.ConsoleLogger;
 import inkapplicaitons.android.logger.Logger;
 import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
+import org.animetwincities.animedetour.framework.intitializer.StethoInitializer;
 
 /**
  * Defines Debug-only Services.
@@ -21,5 +23,12 @@ public class DebugModule
     public Logger getLogger()
     {
         return new ConsoleLogger(1);
+    }
+
+    @Provides
+    @AvailableInDebug
+    public ApplicationLifecycleSubscriber getDebugApplicationSubscribers()
+    {
+        return new StethoInitializer();
     }
 }

@@ -67,6 +67,10 @@ dependencies {
     compile 'com.github.InkApplications:android-logger:4.1.0'
     compile 'com.github.InkApplications:android-layout-injector:1.1.0'
     compile 'com.github.InkApplications:guava-stopwatch:21.0'
+    compile 'com.github.InkApplications:android-application-lifecycle:1.0.1'
+
+    debugCompile 'com.facebook.stetho:stetho:1.4.2'
+    debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
 }
 
 tasks.withType(Test) {
