@@ -1,6 +1,7 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
 import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
 import dagger.Module;
 import dagger.Provides;
@@ -8,6 +9,7 @@ import inkapplicaitons.android.logger.ConsoleLogger;
 import inkapplicaitons.android.logger.Logger;
 import okhttp3.Interceptor;
 import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
+import org.animetwincities.animedetour.framework.intitializer.LeakCanaryInitializer;
 import org.animetwincities.animedetour.framework.intitializer.StethoInitializer;
 
 import java.util.Arrays;
@@ -34,7 +36,7 @@ public class DebugModule
     @AvailableInDebug
     public ApplicationLifecycleSubscriber getDebugApplicationSubscribers()
     {
-        return new StethoInitializer();
+        return new ApplicationCallbacks(new StethoInitializer(), new LeakCanaryInitializer());
     }
 
     @Provides

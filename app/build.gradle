@@ -72,6 +72,8 @@ dependencies {
     debugCompile 'com.facebook.stetho:stetho:1.4.2'
     debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+
     compile 'com.facebook.fresco:fresco:1.1.0'
     compile "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
 }
