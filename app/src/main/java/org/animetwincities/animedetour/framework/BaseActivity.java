@@ -3,6 +3,7 @@ package org.animetwincities.animedetour.framework;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import butterknife.ButterKnife;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
@@ -38,6 +39,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         LimitTimer timer = this.timerFactory.startForLimit("Activity Initialize", 500, TimeUnit.MILLISECONDS);
         this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
         LayoutInjector.injectContentView(this);
+        ButterKnife.bind(this);
         timer.finish();
     }
 
