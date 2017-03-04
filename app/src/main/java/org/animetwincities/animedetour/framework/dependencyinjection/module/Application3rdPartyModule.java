@@ -1,6 +1,5 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
 import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
 import dagger.Module;
@@ -10,6 +9,7 @@ import inkapplicaitons.android.logger.Logger;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
+import org.animetwincities.animedetour.framework.firebase.FirebaseLogger;
 import org.animetwincities.animedetour.framework.fresco.FrescoInitializer;
 
 import javax.inject.Singleton;
@@ -26,9 +26,9 @@ public class Application3rdPartyModule
 {
     @Provides
     @Singleton
-    public Logger getLogger(@AvailableInDebug Logger debugLog)
+    public Logger getLogger(@AvailableInDebug Logger debugLog, FirebaseLogger firebaseLog)
     {
-        List<Logger> loggers = Arrays.asList(debugLog);
+        List<Logger> loggers = Arrays.asList(debugLog, firebaseLog);
 
         return new CompositeLogger(loggers);
     }

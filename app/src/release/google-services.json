@@ -1,0 +1,73 @@
+{
+    "project_info": {
+        "project_number": "343702558193",
+        "firebase_url": "https://anime-detour-events.firebaseio.com",
+        "project_id": "anime-detour-events",
+        "storage_bucket": "anime-detour-events.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:343702558193:android:767fc73ad40a9074",
+                "android_client_info": {
+                    "package_name": "org.animetwincities.animedetour.dev"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "343702558193-rbujai4q9s4n2lk6jjpf5kl9o8mobkic.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyAIpW94svu4rSFxs4XAd-Go7Ju8pO9xWeI"
+                }
+            ],
+            "services": {
+                "analytics_service": {
+                    "status": 1
+                },
+                "appinvite_service": {
+                    "status": 1,
+                    "other_platform_oauth_client": []
+                },
+                "ads_service": {
+                    "status": 2
+                }
+            }
+        },
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:343702558193:android:fa90d060dadfb553",
+                "android_client_info": {
+                    "package_name": "org.animetwincities.animedetour.debug"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "343702558193-rbujai4q9s4n2lk6jjpf5kl9o8mobkic.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyAIpW94svu4rSFxs4XAd-Go7Ju8pO9xWeI"
+                }
+            ],
+            "services": {
+                "analytics_service": {
+                    "status": 1
+                },
+                "appinvite_service": {
+                    "status": 1,
+                    "other_platform_oauth_client": []
+                },
+                "ads_service": {
+                    "status": 2
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}
