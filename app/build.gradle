@@ -1,19 +1,46 @@
 apply plugin: 'com.android.application'
 
 android {
+    def specifiedVersionCode = project.hasProperty("versionCode") ? project.getProperty("versionCode") as Integer : 3000
+    def specifiedVersionName = project.hasProperty("versionName") ? project.getProperty("versionName") as String : "2.0-SNAPSHOT"
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "org.animetwincities.animedetour"
-        minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode specifiedVersionCode
+        versionName specifiedVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
+            if (project.hasProperty("keystoreFile")) {
+                storeFile file(project.getProperty("keystoreFile") as String)
+                storePassword project.getProperty("keystorePassword") as String
+                keyAlias project.getProperty("keystoreAlias") as String
+                keyPassword project.getProperty("keyPassword") as String
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            defaultConfig {
+                minSdkVersion project.hasProperty("supportLevel") ? 16 : 21
+            }
+            applicationIdSuffix '.debug'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled project.hasProperty("supportLevel")
+            debuggable true
+        }
+        release {
+            if (project.hasProperty("keystoreFile")) {
+                signingConfig signingConfigs.release
+            }
+            defaultConfig {
+                minSdkVersion 16
+            }
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
