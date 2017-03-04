@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
+import icepick.Icepick;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
@@ -40,6 +41,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
         LayoutInjector.injectContentView(this);
         ButterKnife.bind(this);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         timer.finish();
     }
 
@@ -77,6 +79,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     {
         super.onSaveInstanceState(outState);
         this.logger.trace("Activity Lifecycle: %s.onSaveInstanceState()", this.getClass().getSimpleName());
+        Icepick.saveInstanceState(this, outState);
     }
 
     /**

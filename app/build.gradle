@@ -61,6 +61,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
+    compile 'frankiesardo:icepick:3.1.0'
+    provided 'frankiesardo:icepick-processor:3.1.0'
+
     compile 'com.github.InkApplications:android-logger:4.1.0'
     compile 'com.github.InkApplications:android-layout-injector:1.1.0'
     compile 'com.github.InkApplications:guava-stopwatch:21.0'
