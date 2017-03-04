@@ -1,5 +1,6 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
 import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
 import dagger.Module;
@@ -8,6 +9,7 @@ import inkapplicaitons.android.logger.CompositeLogger;
 import inkapplicaitons.android.logger.Logger;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
 import org.animetwincities.animedetour.framework.firebase.FirebaseLogger;
 import org.animetwincities.animedetour.framework.fresco.FrescoInitializer;
@@ -53,5 +55,15 @@ public class Application3rdPartyModule
         }
 
         return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseRemoteConfig getRemoteConfig()
+    {
+        FirebaseRemoteConfig config = FirebaseRemoteConfig.getInstance();
+        config.setDefaults(AppConfig.getDefaultConfigMap());
+
+        return config;
     }
 }

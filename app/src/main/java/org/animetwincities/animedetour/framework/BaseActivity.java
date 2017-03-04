@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import icepick.Icepick;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
@@ -31,6 +33,12 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     @Inject
     TimerFactory timerFactory;
 
+    @Inject
+    FirebaseRemoteConfig remoteConfig;
+
+    @Inject
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -42,6 +50,8 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         LayoutInjector.injectContentView(this);
         ButterKnife.bind(this);
         Icepick.restoreInstanceState(this, savedInstanceState);
+        remoteConfig.fetch().addOnCompleteListener(this::configComplete);
+
         timer.finish();
     }
 
@@ -58,6 +68,25 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         super.onResume();
         this.logger.info("Viewing: %s", this.getClass().getSimpleName());
         this.logger.trace("Activity Lifecycle: %s.onResume()", this.getClass().getSimpleName());
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        this.logger.trace("Activity Lifecycle: %s.onPostResume()", this.getClass().getSimpleName());
+        this.remoteConfig.activateFetched();
+        this.onNewConfig(this.appConfig);
+    }
+
+    /**
+     * Invoked when a new Application config is available.
+     *
+     * If the Activity has code that can be changed with a remote config, it
+     * should be updated here.
+     */
+    protected void onNewConfig(AppConfig config)
+    {
+        this.logger.trace("Activity Lifecycle: %s.onNewConfig()", this.getClass().getSimpleName());
     }
 
     @Override
@@ -80,6 +109,18 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         super.onSaveInstanceState(outState);
         this.logger.trace("Activity Lifecycle: %s.onSaveInstanceState()", this.getClass().getSimpleName());
         Icepick.saveInstanceState(this, outState);
+    }
+
+    /**
+     * Invoked when Firebase Config load is complete.
+     */
+    private void configComplete(Task<Void> voidTask) {
+        if (voidTask.isSuccessful()) {
+            this.remoteConfig.activateFetched();
+            this.onNewConfig(this.appConfig);
+        } else {
+            this.logger.error(voidTask.getException(), "Failed to load Firebase Config.");
+        }
     }
 
     /**
