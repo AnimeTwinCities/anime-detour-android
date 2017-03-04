@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import icepick.Icepick;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
@@ -34,9 +32,6 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     TimerFactory timerFactory;
 
     @Inject
-    FirebaseRemoteConfig remoteConfig;
-
-    @Inject
     AppConfig appConfig;
 
     @Override
@@ -50,7 +45,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         LayoutInjector.injectContentView(this);
         ButterKnife.bind(this);
         Icepick.restoreInstanceState(this, savedInstanceState);
-        remoteConfig.fetch().addOnCompleteListener(this::configComplete);
+        this.appConfig.update().subscribe(() -> onNewConfig(this.appConfig));
 
         timer.finish();
     }
@@ -74,7 +69,6 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     protected void onPostResume() {
         super.onPostResume();
         this.logger.trace("Activity Lifecycle: %s.onPostResume()", this.getClass().getSimpleName());
-        this.remoteConfig.activateFetched();
         this.onNewConfig(this.appConfig);
     }
 
@@ -109,18 +103,6 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         super.onSaveInstanceState(outState);
         this.logger.trace("Activity Lifecycle: %s.onSaveInstanceState()", this.getClass().getSimpleName());
         Icepick.saveInstanceState(this, outState);
-    }
-
-    /**
-     * Invoked when Firebase Config load is complete.
-     */
-    private void configComplete(Task<Void> voidTask) {
-        if (voidTask.isSuccessful()) {
-            this.remoteConfig.activateFetched();
-            this.onNewConfig(this.appConfig);
-        } else {
-            this.logger.error(voidTask.getException(), "Failed to load Firebase Config.");
-        }
     }
 
     /**

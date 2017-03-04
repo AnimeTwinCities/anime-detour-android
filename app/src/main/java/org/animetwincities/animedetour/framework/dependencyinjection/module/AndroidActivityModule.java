@@ -25,7 +25,7 @@ import org.animetwincities.animedetour.framework.dependencyinjection.ActivitySco
 public class AndroidActivityModule
 {
     /**
-     * Activity context to fetch services from.
+     * Activity context to update services from.
      */
     final private AppCompatActivity activity;
 

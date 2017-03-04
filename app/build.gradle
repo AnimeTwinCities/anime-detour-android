@@ -77,13 +77,16 @@ dependencies {
     compile 'com.github.InkApplications:guava-stopwatch:21.0'
     compile 'com.github.InkApplications:android-application-lifecycle:1.0.1'
 
+    compile 'com.facebook.fresco:fresco:1.1.0'
+    compile "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
+
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
+
     debugCompile 'com.facebook.stetho:stetho:1.4.2'
     debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-
-    compile 'com.facebook.fresco:fresco:1.1.0'
-    compile "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
 }
 
 tasks.withType(Test) {

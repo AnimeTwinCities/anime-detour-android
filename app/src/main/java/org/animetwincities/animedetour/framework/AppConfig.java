@@ -1,6 +1,11 @@
 package org.animetwincities.animedetour.framework;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import org.animetwincities.rxfirebase.FirebaseObservables;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,6 +37,22 @@ public class AppConfig
     public String getTestHeadline()
     {
         return this.remoteConfig.getString(TEST_HEADLINE);
+    }
+
+    /**
+     * Update the config values with remote configuration values.
+     *
+     * @return an observable that can be subscribed to when the configuration
+     *         update is complete
+     */
+    public Completable update()
+    {
+        Task<Void> updateTask = remoteConfig.fetch();
+
+        return FirebaseObservables.fromVoidTask(updateTask)
+            .subscribeOn(Schedulers.io())
+            .doOnComplete(remoteConfig::activateFetched)
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
