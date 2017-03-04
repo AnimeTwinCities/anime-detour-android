@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import inkapplicaitons.android.logger.Logger;
+import inkapplications.android.layoutinjector.LayoutInjector;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerActivityComponentAware;
@@ -29,6 +30,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
 
         this.initializeInjections();
         this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
+        LayoutInjector.injectContentView(this);
     }
 
     @Override

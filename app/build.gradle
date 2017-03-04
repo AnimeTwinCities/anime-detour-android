@@ -58,4 +58,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
 
     compile 'com.github.InkApplications:android-logger:4.1.0'
+    compile 'com.github.InkApplications:android-layout-injector:1.1.0'
 }

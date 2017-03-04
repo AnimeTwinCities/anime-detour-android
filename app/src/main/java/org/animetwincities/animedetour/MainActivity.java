@@ -1,23 +1,21 @@
 package org.animetwincities.animedetour;
 
-import android.os.Bundle;
 import inkapplicaitons.android.logger.Logger;
+import inkapplications.android.layoutinjector.Layout;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 
 import javax.inject.Inject;
 
+@Layout(R.layout.main)
 public class MainActivity extends BaseActivity
 {
     @Inject
     Logger logger;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-
+    protected void onResume() {
+        super.onResume();
         this.logger.debug("Hello Logging!");
     }
 
