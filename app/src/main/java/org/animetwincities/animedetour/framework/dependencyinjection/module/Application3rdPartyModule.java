@@ -1,5 +1,6 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
 import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
@@ -65,5 +66,12 @@ public class Application3rdPartyModule
         config.setDefaults(AppConfig.getDefaultConfigMap());
 
         return config;
+    }
+
+    @Provides
+    @Singleton
+    FirebaseAuth getFirebaseAuth()
+    {
+        return FirebaseAuth.getInstance();
     }
 }

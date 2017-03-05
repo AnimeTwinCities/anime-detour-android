@@ -1,12 +1,15 @@
 package org.animetwincities.animedetour.framework;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import icepick.Icepick;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
+import org.animetwincities.animedetour.framework.auth.AuthRepository;
+import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerActivityComponentAware;
@@ -34,6 +37,9 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     @Inject
     AppConfig appConfig;
 
+    @Inject
+    AuthRepository authRepository;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -45,7 +51,6 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
         LayoutInjector.injectContentView(this);
         ButterKnife.bind(this);
         Icepick.restoreInstanceState(this, savedInstanceState);
-        this.appConfig.update().subscribe(() -> onNewConfig(this.appConfig));
 
         timer.finish();
     }
@@ -55,6 +60,9 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     {
         super.onStart();
         this.logger.trace("Activity Lifecycle: %s.onStart()", this.getClass().getSimpleName());
+
+        this.appConfig.update().subscribe(() -> onNewConfig(this.appConfig));
+        this.authRepository.signInAnonymously().subscribe(this::onNewUser);
     }
 
     @Override
@@ -77,10 +85,26 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
      *
      * If the Activity has code that can be changed with a remote config, it
      * should be updated here.
+     * This is Invoked sometime after OnStart. if a listener is created here,
+     * it is safest to unsubscribe int the corresponding onStop method.
      */
     protected void onNewConfig(AppConfig config)
     {
-        this.logger.trace("Activity Lifecycle: %s.onNewConfig()", this.getClass().getSimpleName());
+        this.logger.trace("Activity Event: %s.onNewConfig()", this.getClass().getSimpleName());
+    }
+
+    /**
+     * Invoked when a new User object is available.
+     *
+     * Any code dependant on the user object can be invoked from this method.
+     * This is Invoked sometime after OnStart. if a listener is created here,
+     * it is safest to unsubscribe int the corresponding onStop method.
+     *
+     * @param user The user that has been signed in. Never Null.
+     */
+    protected void onNewUser(@NonNull User user)
+    {
+        this.logger.trace("Activity Event: %s.onNewUser(%s)", this.getClass().getSimpleName(), user);
     }
 
     @Override

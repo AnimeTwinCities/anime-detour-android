@@ -7,6 +7,7 @@ import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseActivity;
+import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 
 import javax.inject.Inject;
