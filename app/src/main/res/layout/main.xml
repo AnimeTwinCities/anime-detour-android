@@ -6,22 +6,35 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="org.animetwincities.animedetour.MainActivity">
 
-    <TextView
-            android:id="@+id/main_headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"/>
+    <android.support.v7.widget.Toolbar
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:layout_alignParentTop="true"
+            android:elevation="4dp" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/main_demo_image"
-            android:layout_below="@id/main_headline"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            app:placeholderImage="@mipmap/ic_launcher"/>
+    <RelativeLayout
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+        <TextView
+                android:id="@+id/main_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello World!"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/main_demo_image"
+                android:layout_below="@id/main_headline"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                app:placeholderImage="@mipmap/ic_launcher"/>
+    </RelativeLayout>
 </RelativeLayout>
