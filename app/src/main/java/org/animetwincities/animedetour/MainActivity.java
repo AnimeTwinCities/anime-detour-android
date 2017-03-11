@@ -7,18 +7,16 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import butterknife.BindView;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
-import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
 
@@ -28,12 +26,6 @@ public class MainActivity extends BaseActivity
     @Inject
     Logger logger;
 
-    @BindView(R.id.main_demo_image)
-    SimpleDraweeView demoImage;
-
-    @BindView(R.id.main_headline)
-    TextView headline;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -41,6 +33,9 @@ public class MainActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, scheduleFragment).commit();
         this.initializeNavigation();
     }
 
@@ -48,22 +43,6 @@ public class MainActivity extends BaseActivity
     protected void onStart()
     {
         super.onStart();
-        this.demoImage.setImageURI("https://placeimg.com/200/200/animals#.jpg");
-    }
-
-    @Override
-    protected void onNewConfig(AppConfig config)
-    {
-        super.onNewConfig(config);
-
-        this.headline.setText(config.getTestHeadline());
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        this.logger.debug("Hello Logging!");
     }
 
     @Override

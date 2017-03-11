@@ -9,11 +9,11 @@ import io.reactivex.ObservableOnSubscribe;
  *
  * @author Renee Vandervelde <Renee@ReneeVandervelde.com>
  */
-class ResultTask<RESULT> implements ObservableOnSubscribe<RESULT>
+class ResultTaskOnSubscribe<RESULT> implements ObservableOnSubscribe<RESULT>
 {
     final private Task<RESULT> task;
 
-    ResultTask(Task<RESULT> task)
+    ResultTaskOnSubscribe(Task<RESULT> task)
     {
         this.task = task;
     }

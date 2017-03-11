@@ -4,7 +4,6 @@ import com.google.android.gms.tasks.Task;
 import io.reactivex.ObservableEmitter;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ResultTaskTest
@@ -14,7 +13,7 @@ public class ResultTaskTest
     {
         Task spyTask = mock(Task.class);
         ObservableEmitter fakeEmitter = mock(ObservableEmitter.class);
-        ResultTask resultTask = new ResultTask(spyTask);
+        ResultTaskOnSubscribe resultTask = new ResultTaskOnSubscribe(spyTask);
 
         resultTask.subscribe(fakeEmitter);
 

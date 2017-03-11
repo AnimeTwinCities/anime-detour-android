@@ -1,6 +1,8 @@
 package org.animetwincities.rxfirebase;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Query;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
@@ -23,7 +25,7 @@ public class FirebaseObservables
      */
     public static Completable fromVoidTask(Task<Void> task)
     {
-        return Completable.create(new CompletableTask(task));
+        return Completable.create(new CompletableTaskOnSubscribe(task));
     }
 
     /**
@@ -38,6 +40,18 @@ public class FirebaseObservables
      */
     public static <RESULT> Observable<RESULT> fromTask(Task<RESULT> authResultTask)
     {
-        return Observable.create(new ResultTask<>(authResultTask));
+        return Observable.create(new ResultTaskOnSubscribe<>(authResultTask));
+    }
+
+    /**
+     * Create an Observable from a Firebase Query or Reference.
+     *
+     * @param query The Firebase Query to be observed. This can also be a
+     *              Database reference, which is a Query.
+     * @return An Observable that emits database snapshots for the query/ref.
+     */
+    public static Observable<DataSnapshot> fromQuery(Query query)
+    {
+        return Observable.create(new QueryOnSubscribe(query));
     }
 }

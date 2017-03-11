@@ -9,11 +9,11 @@ import io.reactivex.CompletableOnSubscribe;
  *
  * @author Renee Vandervelde <Renee@ReneeVandervelde.com>
  */
-class CompletableTask implements CompletableOnSubscribe
+class CompletableTaskOnSubscribe implements CompletableOnSubscribe
 {
     final private Task<Void> task;
 
-    CompletableTask(Task<Void> task)
+    CompletableTaskOnSubscribe(Task<Void> task)
     {
         this.task = task;
     }
