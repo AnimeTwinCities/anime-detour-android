@@ -11,7 +11,7 @@ import org.animetwincities.animedetour.framework.dependencyinjection.ActivityCom
 import javax.inject.Inject;
 import java.util.List;
 
-@Layout(R.layout.schedule)
+@Layout(R.layout.fragment_schedule)
 public class ScheduleFragment extends BaseFragment
 {
     @Inject

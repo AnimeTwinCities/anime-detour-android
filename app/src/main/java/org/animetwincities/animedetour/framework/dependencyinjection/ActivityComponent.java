@@ -5,6 +5,7 @@ import org.animetwincities.animedetour.MainActivity;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
+import org.animetwincities.animedetour.guests.GuestsFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 @ActivityScope
@@ -33,4 +34,5 @@ public interface ActivityComponent
 
     void inject(MainActivity target);
     void inject(ScheduleFragment target);
+    void inject(GuestsFragment target);
 }

@@ -16,11 +16,12 @@ import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.guests.GuestsFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
 
-@Layout(R.layout.main)
+@Layout(R.layout.activity_main)
 public class MainActivity extends BaseActivity
 {
     @Inject
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity
         component.inject(this);
     }
 
-    /** Show the full app schedule. */
+    /** Show the full app fragment_schedule. */
     private boolean showSchedule(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing Schedule");
@@ -69,6 +70,10 @@ public class MainActivity extends BaseActivity
     private boolean showGuests(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing Guest List");
+
+        getSupportFragmentManager().beginTransaction().addToBackStack("")
+                .replace(R.id.fragment_container, GuestsFragment.newInstance()).commit();
+
         return false;
     }
 

@@ -1,7 +1,7 @@
 package org.animetwincities.animedetour.schedule;
 
 /**
- * A single event on the schedule.
+ * A single event on the fragment_schedule.
  *
  * @author Renee Vandervelde <Renee@ReneeVandervelde.com>
  */
