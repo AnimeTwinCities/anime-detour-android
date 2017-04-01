@@ -1,4 +1,4 @@
-package org.animetwincities.animedetour.guests;
+package org.animetwincities.animedetour.guests.model;
 
 /**
  * A 1:1 exact representation of the Guest structure on Firebase.

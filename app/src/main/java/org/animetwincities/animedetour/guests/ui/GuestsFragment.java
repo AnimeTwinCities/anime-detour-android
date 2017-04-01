@@ -1,4 +1,4 @@
-package org.animetwincities.animedetour.guests;
+package org.animetwincities.animedetour.guests.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.guests.model.Guest;
+import org.animetwincities.animedetour.guests.model.GuestRepository;
 
 import java.util.List;
 
@@ -20,9 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by kenton on 3/11/17.
+ * Primary fragment for displaying a list of Anime Detour guest information. Designed to be hosted
+ * the {@link org.animetwincities.animedetour.MainActivity}
  */
-
 public class GuestsFragment extends BaseFragment
 {
 
@@ -64,12 +66,18 @@ public class GuestsFragment extends BaseFragment
 
     private void initializeAdapterAndRecyclerView() {
         this.guestsAdapter = new GuestsAdapter(getContext());
+        this.guestsAdapter.getOnClickObservable().subscribe(this::onClickGuest);
         this.guestList.setLayoutManager(new GridLayoutManager(getContext(), GUEST_GRID_SPAN_COUNT));
         this.guestList.setAdapter(guestsAdapter);
     }
 
     private void loadGuestsIntoUi(List<Guest> guests) {
         this.guestsAdapter.setGuestList(guests);
+    }
+
+    private void onClickGuest(Guest guest) {
+        Bundle extras = new Bundle();
+        extras.putString(GuestDetailActivity.KEY_GUEST_ID, guest.getId());
     }
 
 }

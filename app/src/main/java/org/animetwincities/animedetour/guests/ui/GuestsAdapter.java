@@ -1,4 +1,4 @@
-package org.animetwincities.animedetour.guests;
+package org.animetwincities.animedetour.guests.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.animetwincities.animedetour.R;
+import org.animetwincities.animedetour.guests.model.Guest;
 
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * RecyclerView Adapter to display Guest information.
@@ -16,8 +20,10 @@ import java.util.List;
  */
 public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Guest> guestList;
+
+    private final PublishSubject<Guest> onClickSubject = PublishSubject.create();
 
     public GuestsAdapter(Context context) {
         this.context = context;
@@ -42,10 +48,20 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
         holder.bind(this.guestList.get(position));
+        holder.itemView.setOnClickListener(view -> onClickSubject.onNext(guestList.get(position)));
     }
 
     @Override
     public int getItemCount() {
         return this.guestList != null ? this.guestList.size() : 0;
+    }
+
+    /**
+     * @return
+     *          Observable which will emit specific guests in accordance with onClickEvents
+     *          on the adapter.
+     */
+    public Observable<Guest> getOnClickObservable() {
+        return this.onClickSubject;
     }
 }

@@ -16,7 +16,7 @@ import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
-import org.animetwincities.animedetour.guests.GuestsFragment;
+import org.animetwincities.animedetour.guests.ui.GuestsFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;

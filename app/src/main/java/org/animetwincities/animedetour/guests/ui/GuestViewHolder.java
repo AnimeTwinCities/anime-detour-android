@@ -1,4 +1,4 @@
-package org.animetwincities.animedetour.guests;
+package org.animetwincities.animedetour.guests.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.animetwincities.animedetour.R;
+import org.animetwincities.animedetour.guests.model.Guest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
