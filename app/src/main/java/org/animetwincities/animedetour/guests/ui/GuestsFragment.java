@@ -1,5 +1,6 @@
 package org.animetwincities.animedetour.guests.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,9 +12,11 @@ import android.view.ViewGroup;
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.guests.model.FirebaseGuest;
 import org.animetwincities.animedetour.guests.model.Guest;
 import org.animetwincities.animedetour.guests.model.GuestRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,13 +74,18 @@ public class GuestsFragment extends BaseFragment
         this.guestList.setAdapter(guestsAdapter);
     }
 
+    private void test(HashMap<String, FirebaseGuest> test) {
+
+    }
+
     private void loadGuestsIntoUi(List<Guest> guests) {
         this.guestsAdapter.setGuestList(guests);
     }
 
     private void onClickGuest(Guest guest) {
-        Bundle extras = new Bundle();
-        extras.putString(GuestDetailActivity.KEY_GUEST_ID, guest.getId());
+        Intent detailIntent = new Intent(getContext(), GuestDetailActivity.class);
+        detailIntent.putExtra(GuestDetailActivity.KEY_GUEST_ID, guest.getId());
+        startActivity(detailIntent);
     }
 
 }

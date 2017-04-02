@@ -9,6 +9,8 @@ package org.animetwincities.animedetour.guests.model;
 public class FirebaseGuest {
 
     public String bio;
+    public String category;
+    public String icon;
     public String image;
     public String name;
 

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -35,37 +36,37 @@ public class GuestRepository
 
     public Observable<Guest> observeGuest(String id) {
         DatabaseReference databaseReference = this.firebase.getReference("guests").child(YEAR_CHILD_KEY);
-        GenericTypeIndicator<HashMap<String, FirebaseGuest>> typeIndicator = new GenericTypeIndicator<HashMap<String, FirebaseGuest>>() {};
+        GenericTypeIndicator<HashMap<String, FirebaseGuest>> typeIndicator =
+                new GenericTypeIndicator<HashMap<String, FirebaseGuest>>() {};
 
         return FirebaseObservables.fromQuery(databaseReference)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
-                .map(DataSnapshot::getChildren)
-                .flatMap(dataSnapshots -> Observable.fromIterable(dataSnapshots)
-                        .map(snapshot -> snapshot.getValue(typeIndicator))
-                        .filter(stringFirebaseGuestHashMap -> stringFirebaseGuestHashMap != null)
-                        .flatMap(map -> Observable.fromIterable(map.entrySet())
-                                .map(stringFirebaseGuestEntry ->  Guest.from(stringFirebaseGuestEntry
-                                        .getKey(), stringFirebaseGuestEntry.getValue()))
-                                .filter(guest -> guest.getId().equals(id))));
+                .map(snapshot -> snapshot.getValue(typeIndicator))
+                .filter(stringFirebaseGuestHashMap -> stringFirebaseGuestHashMap != null)
+                .flatMap(map -> Observable.fromIterable(map.entrySet())
+                        .map(stringFirebaseGuestEntry ->  Guest.from(stringFirebaseGuestEntry
+                                .getKey(), stringFirebaseGuestEntry.getValue()))
+                        .filter(guest -> guest.getId().equals(id)))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<Guest>> observeGuests() {
         DatabaseReference databaseReference = this.firebase.getReference("guests").child(YEAR_CHILD_KEY);
-        GenericTypeIndicator<HashMap<String, FirebaseGuest>> typeIndicator = new GenericTypeIndicator<HashMap<String, FirebaseGuest>>() {};
+        GenericTypeIndicator<HashMap<String, FirebaseGuest>> typeIndicator =
+                new GenericTypeIndicator<HashMap<String, FirebaseGuest>>() {};
 
         return FirebaseObservables.fromQuery(databaseReference)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
-                .map(DataSnapshot::getChildren)
-                .flatMap(dataSnapshots -> Observable.fromIterable(dataSnapshots)
-                        .map(snapshot -> snapshot.getValue(typeIndicator))
-                        .filter(stringFirebaseGuestHashMap -> stringFirebaseGuestHashMap != null)
-                        .flatMap(map -> Observable.fromIterable(map.entrySet())
-                                .map(stringFirebaseGuestEntry ->  Guest.from(stringFirebaseGuestEntry
-                                        .getKey(), stringFirebaseGuestEntry.getValue()))
-                                        .toList()
-                                        .toObservable()
-                                ));
+                .map(snapshot -> snapshot.getValue(typeIndicator))
+                .filter(stringFirebaseGuestHashMap -> stringFirebaseGuestHashMap != null)
+                .flatMap(map -> Observable.fromIterable(map.entrySet())
+                        .map(guestPair ->  Guest.from(guestPair
+                                .getKey(), guestPair.getValue()))
+                        .toList()
+                        .toObservable())
+                .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

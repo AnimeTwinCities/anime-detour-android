@@ -22,6 +22,17 @@ public class Guest {
         return newGuest;
     }
 
+    public static Guest from(FirebaseGuest firebaseGuest) {
+        Guest newGuest = new Guest();
+
+        newGuest.id = "";
+        newGuest.bio = firebaseGuest.bio;
+        newGuest.image = firebaseGuest.image;
+        newGuest.name = firebaseGuest.name;
+
+        return newGuest;
+    }
+
     public String getId() {
         return id;
     }
