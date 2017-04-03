@@ -1,5 +1,6 @@
 package org.animetwincities.animedetour;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -7,19 +8,24 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
+
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.DraweeTransition;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import inkapplicaitons.android.logger.Logger;
-import inkapplications.android.layoutinjector.Layout;
+
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.guests.ui.GuestsFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import inkapplicaitons.android.logger.Logger;
+import inkapplications.android.layoutinjector.Layout;
 
 @Layout(R.layout.activity_main)
 public class MainActivity extends BaseActivity
@@ -37,6 +43,15 @@ public class MainActivity extends BaseActivity
 
         ScheduleFragment scheduleFragment = new ScheduleFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, scheduleFragment).commit();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementEnterTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                    ScalingUtils.ScaleType.CENTER_CROP));
+            getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                    ScalingUtils.ScaleType.CENTER_CROP));
+        }
+
+
         this.initializeNavigation();
     }
 

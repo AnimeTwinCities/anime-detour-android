@@ -105,7 +105,7 @@ public class GuestDetailFragment extends BaseFragment {
                 } else {
                     getActivity().finish();
                 }
-                return true;
+                return false;
             default:
                 return super.onOptionsItemSelected(item);
         }

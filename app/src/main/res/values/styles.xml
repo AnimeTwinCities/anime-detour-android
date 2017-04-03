@@ -9,4 +9,8 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>
