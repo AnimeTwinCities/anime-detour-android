@@ -24,6 +24,9 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
     private final Context context;
     private List<Guest> guestList;
 
+    /**
+     * Rx PublishSubject used to push through onClick events.
+     */
     private final PublishSubject<Pair<View, Guest>> onClickSubject = PublishSubject.create();
 
     public GuestsAdapter(Context context) {
@@ -60,6 +63,10 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
     }
 
     /**
+     * Subscribe to receive events for when a Guest is clicked. Returns a {@link Pair} holding
+     * the view which should be used for the SharedElementTransition to {@link GuestDetailActivity},
+     * as well as the {@link Guest} which has been clicked.
+     *
      * @return
      *          Observable which will emit specific guests in accordance with onClickEvents
      *          on the adapter.

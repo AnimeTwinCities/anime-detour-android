@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -29,11 +30,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import inkapplicaitons.android.logger.Logger;
 
 /**
  * Fragment to display detail about a specific Guest
  */
-public class GuestDetailFragment extends BaseFragment {
+public class GuestDetailFragment extends BaseFragment
+{
 
     private static String KEY_GUEST_ID = "key_guest_id";
 
@@ -46,8 +49,14 @@ public class GuestDetailFragment extends BaseFragment {
     @BindView(R.id.guest_detail_bio)
     TextView bio;
 
+    @BindView(R.id.guest_progress_spinner)
+    ProgressBar progressSpinner;
+
     @Inject
     GuestRepository guestRepository;
+
+    @Inject
+    Logger logger;
 
     /**
      * Creates a new instance of {@link GuestDetailFragment} instantiated with
@@ -60,7 +69,8 @@ public class GuestDetailFragment extends BaseFragment {
      * @return
      *          Instantiated fragment
      */
-    public static GuestDetailFragment newInstance(String guestId) {
+    public static GuestDetailFragment newInstance(String guestId)
+    {
         GuestDetailFragment newInstance = new GuestDetailFragment();
 
         Bundle extras = new Bundle();
@@ -73,7 +83,8 @@ public class GuestDetailFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_guest_detail, container, false);
         ButterKnife.bind(this, view);
 
@@ -81,12 +92,14 @@ public class GuestDetailFragment extends BaseFragment {
     }
 
     @Override
-    public void injectSelf(ActivityComponent component) {
+    public void injectSelf(ActivityComponent component)
+    {
         component.inject(this);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity().getIntent().getExtras().containsKey(KEY_GUEST_ID)) {
@@ -96,7 +109,8 @@ public class GuestDetailFragment extends BaseFragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
@@ -111,18 +125,33 @@ public class GuestDetailFragment extends BaseFragment {
         }
     }
 
-    private void loadGuest(String id) {
-        this.guestRepository.observeGuest(id).subscribe(this::onGuestLoaded);
+    private void loadGuest(String id)
+    {
+        this.progressSpinner.setVisibility(View.VISIBLE);
+        this.guestRepository.observeGuest(id).subscribe(this::onGuestLoaded,
+                this::onGuestFailedToLoad);
     }
 
-    private void onGuestLoaded(Guest guest) {
+    private void onGuestFailedToLoad(Throwable error)
+    {
+        this.progressSpinner.setVisibility(View.GONE);
+
+        this.logger.error(error, "Error occurred loading Guest from Firebase on GuestDetailFragment");
+
+    }
+
+    private void onGuestLoaded(Guest guest)
+    {
+        this.progressSpinner.setVisibility(View.GONE);
+
         this.bio.setText(guest.getBio());
         this.initToolbar(guest.getName());
 
         this.guestImageBackdrop.setController(createGuestImageController(guest.getImage()));
     }
 
-    private void initToolbar(String title) {
+    private void initToolbar(String title)
+    {
         BaseActivity baseActivity = (BaseActivity) getActivity();
         baseActivity.setSupportActionBar(this.toolbar);
 
@@ -136,7 +165,12 @@ public class GuestDetailFragment extends BaseFragment {
         }
     }
 
-    private DraweeController createGuestImageController(String uri) {
+    /**
+     * Creates a new {@link DraweeController} with a listener which will appropriately start
+     * the delayed shared element transition as soon as the image is loaded.
+     */
+    private DraweeController createGuestImageController(String uri)
+    {
         ControllerListener listener = new BaseControllerListener<ImageInfo>() {
             @Override
             public void onFinalImageSet(String id, @javax.annotation.Nullable ImageInfo imageInfo,

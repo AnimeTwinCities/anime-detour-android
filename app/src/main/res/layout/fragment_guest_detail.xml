@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     >
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"
         android:layout_width="match_parent"
@@ -46,20 +47,36 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <TextView
-            android:id="@+id/guest_detail_bio"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:lineSpacingExtra="8dp"
-            android:padding="@dimen/activity_horizontal_margin"
-            />
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/guest_detail_bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:lineSpacingExtra="8dp"
+                android:padding="@dimen/activity_horizontal_margin"
+                />
+
+            <ProgressBar
+                android:id="@+id/guest_progress_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
 
