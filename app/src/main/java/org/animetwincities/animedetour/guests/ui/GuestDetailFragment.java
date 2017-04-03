@@ -1,0 +1,188 @@
+package org.animetwincities.animedetour.guests.ui;
+
+import android.graphics.drawable.Animatable;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+
+import org.animetwincities.animedetour.R;
+import org.animetwincities.animedetour.framework.BaseActivity;
+import org.animetwincities.animedetour.framework.BaseFragment;
+import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.guests.model.Guest;
+import org.animetwincities.animedetour.guests.model.GuestRepository;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import inkapplicaitons.android.logger.Logger;
+
+/**
+ * Fragment to display detail about a specific Guest
+ */
+public class GuestDetailFragment extends BaseFragment
+{
+
+    private static String KEY_GUEST_ID = "key_guest_id";
+
+    @BindView(R.id.main_backdrop)
+    SimpleDraweeView guestImageBackdrop;
+
+    @BindView(R.id.main_toolbar)
+    android.support.v7.widget.Toolbar toolbar;
+
+    @BindView(R.id.guest_detail_bio)
+    TextView bio;
+
+    @BindView(R.id.guest_progress_spinner)
+    ProgressBar progressSpinner;
+
+    @Inject
+    GuestRepository guestRepository;
+
+    @Inject
+    Logger logger;
+
+    /**
+     * Creates a new instance of {@link GuestDetailFragment} instantiated with
+     * the guest ID you wish to show detail for (passed in).
+     *
+     * Call this rather than instantiating from new.
+     *
+     * @param guestId
+     *          int ID for the Guest to show detail for.
+     * @return
+     *          Instantiated fragment
+     */
+    public static GuestDetailFragment newInstance(String guestId)
+    {
+        GuestDetailFragment newInstance = new GuestDetailFragment();
+
+        Bundle extras = new Bundle();
+        extras.putString(KEY_GUEST_ID, guestId);
+
+        newInstance.setArguments(extras);
+
+        return newInstance;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_guest_detail, container, false);
+        ButterKnife.bind(this, view);
+
+        return view;
+    }
+
+    @Override
+    public void injectSelf(ActivityComponent component)
+    {
+        component.inject(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        if (getActivity().getIntent().getExtras().containsKey(KEY_GUEST_ID)) {
+            this.loadGuest(getActivity().getIntent().getExtras().getString(KEY_GUEST_ID));
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().finishAfterTransition();
+                } else {
+                    getActivity().finish();
+                }
+                return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void loadGuest(String id)
+    {
+        this.progressSpinner.setVisibility(View.VISIBLE);
+        this.guestRepository.observeGuest(id).subscribe(this::onGuestLoaded,
+                this::onGuestFailedToLoad);
+    }
+
+    private void onGuestFailedToLoad(Throwable error)
+    {
+        this.progressSpinner.setVisibility(View.GONE);
+
+        this.logger.error(error, "Error occurred loading Guest from Firebase on GuestDetailFragment");
+
+    }
+
+    private void onGuestLoaded(Guest guest)
+    {
+        this.progressSpinner.setVisibility(View.GONE);
+
+        this.bio.setText(guest.getBio());
+        this.initToolbar(guest.getName());
+
+        this.guestImageBackdrop.setController(createGuestImageController(guest.getImage()));
+    }
+
+    private void initToolbar(String title)
+    {
+        BaseActivity baseActivity = (BaseActivity) getActivity();
+        baseActivity.setSupportActionBar(this.toolbar);
+
+        ActionBar actionBar =  baseActivity.getSupportActionBar();
+        setHasOptionsMenu(true);
+
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    /**
+     * Creates a new {@link DraweeController} with a listener which will appropriately start
+     * the delayed shared element transition as soon as the image is loaded.
+     */
+    private DraweeController createGuestImageController(String uri)
+    {
+        ControllerListener listener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, @javax.annotation.Nullable ImageInfo imageInfo,
+                                        @javax.annotation.Nullable Animatable animatable) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().startPostponedEnterTransition();
+                }
+            }
+        };
+
+
+        return Fresco.newDraweeControllerBuilder()
+                .setControllerListener(listener).setUri(uri).build();
+    }
+}

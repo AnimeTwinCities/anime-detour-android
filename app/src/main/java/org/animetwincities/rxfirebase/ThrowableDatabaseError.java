@@ -14,6 +14,8 @@ public class ThrowableDatabaseError extends Throwable
 
     public ThrowableDatabaseError(DatabaseError error)
     {
+        super(error.getMessage());
+
         this.error = error;
     }
 

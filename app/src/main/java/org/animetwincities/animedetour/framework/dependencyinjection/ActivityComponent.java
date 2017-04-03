@@ -1,11 +1,15 @@
 package org.animetwincities.animedetour.framework.dependencyinjection;
 
-import dagger.Subcomponent;
 import org.animetwincities.animedetour.MainActivity;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
+import org.animetwincities.animedetour.guests.ui.GuestDetailActivity;
+import org.animetwincities.animedetour.guests.ui.GuestDetailFragment;
+import org.animetwincities.animedetour.guests.ui.GuestsFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
+
+import dagger.Subcomponent;
 
 @ActivityScope
 @Subcomponent(
@@ -33,4 +37,8 @@ public interface ActivityComponent
 
     void inject(MainActivity target);
     void inject(ScheduleFragment target);
+
+    void inject(GuestsFragment target);
+    void inject(GuestDetailActivity target);
+    void inject(GuestDetailFragment target);
 }
