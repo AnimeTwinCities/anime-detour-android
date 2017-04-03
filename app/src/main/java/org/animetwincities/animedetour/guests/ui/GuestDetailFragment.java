@@ -1,5 +1,7 @@
 package org.animetwincities.animedetour.guests.ui;
 
+import android.graphics.drawable.Animatable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -9,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.BaseActivity;
@@ -93,7 +100,11 @@ public class GuestDetailFragment extends BaseFragment {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                getActivity().finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().finishAfterTransition();
+                } else {
+                    getActivity().finish();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,7 +119,7 @@ public class GuestDetailFragment extends BaseFragment {
         this.bio.setText(guest.getBio());
         this.initToolbar(guest.getName());
 
-        this.guestImageBackdrop.setImageURI(guest.getImage());
+        this.guestImageBackdrop.setController(createGuestImageController(guest.getImage()));
     }
 
     private void initToolbar(String title) {
@@ -116,11 +127,28 @@ public class GuestDetailFragment extends BaseFragment {
         baseActivity.setSupportActionBar(this.toolbar);
 
         ActionBar actionBar =  baseActivity.getSupportActionBar();
+        setHasOptionsMenu(true);
 
         if (actionBar != null) {
             actionBar.setTitle(title);
-            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private DraweeController createGuestImageController(String uri) {
+        ControllerListener listener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, @javax.annotation.Nullable ImageInfo imageInfo,
+                                        @javax.annotation.Nullable Animatable animatable) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getActivity().startPostponedEnterTransition();
+                }
+            }
+        };
+
+
+        return Fresco.newDraweeControllerBuilder()
+                .setControllerListener(listener).setUri(uri).build();
     }
 }

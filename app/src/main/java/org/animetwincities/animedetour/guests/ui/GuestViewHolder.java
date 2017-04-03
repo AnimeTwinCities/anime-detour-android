@@ -2,6 +2,7 @@ package org.animetwincities.animedetour.guests.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,6 +35,10 @@ public class GuestViewHolder extends RecyclerView.ViewHolder
     public void bind(Guest guest) {
         this.guestName.setText(guest.getName());
         loadImage(guest.getImage());
+    }
+
+    public ImageView getGuestImageView() {
+        return guestImage;
     }
 
     /**

@@ -1,7 +1,11 @@
 package org.animetwincities.animedetour.guests.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.DraweeTransition;
 
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.BaseActivity;
@@ -25,6 +29,15 @@ public class GuestDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_detail);
         Bundle extras = getIntent().getExtras();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementEnterTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                    ScalingUtils.ScaleType.CENTER_CROP));
+            getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                    ScalingUtils.ScaleType.CENTER_CROP));
+            postponeEnterTransition();
+        }
+
         if (extras.containsKey(KEY_GUEST_ID)) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     GuestDetailFragment.newInstance(extras.getString(KEY_GUEST_ID)), "GUEST_DETAIL")

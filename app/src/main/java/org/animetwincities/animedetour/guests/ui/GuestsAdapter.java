@@ -1,6 +1,7 @@
 package org.animetwincities.animedetour.guests.ui;
 
 import android.content.Context;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
     private final Context context;
     private List<Guest> guestList;
 
-    private final PublishSubject<Guest> onClickSubject = PublishSubject.create();
+    private final PublishSubject<Pair<View, Guest>> onClickSubject = PublishSubject.create();
 
     public GuestsAdapter(Context context) {
         this.context = context;
@@ -48,7 +49,9 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
         holder.bind(this.guestList.get(position));
-        holder.itemView.setOnClickListener(view -> onClickSubject.onNext(guestList.get(position)));
+        holder.itemView.setOnClickListener(view ->
+                onClickSubject.onNext(new Pair<>(holder.getGuestImageView(),
+                        guestList.get(position))));
     }
 
     @Override
@@ -61,7 +64,7 @@ public class GuestsAdapter extends RecyclerView.Adapter<GuestViewHolder> {
      *          Observable which will emit specific guests in accordance with onClickEvents
      *          on the adapter.
      */
-    public Observable<Guest> getOnClickObservable() {
+    public Observable<Pair<View, Guest>> getOnClickObservable() {
         return this.onClickSubject;
     }
 }

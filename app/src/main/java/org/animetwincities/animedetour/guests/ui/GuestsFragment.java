@@ -3,6 +3,8 @@ package org.animetwincities.animedetour.guests.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +14,9 @@ import android.view.ViewGroup;
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
-import org.animetwincities.animedetour.guests.model.FirebaseGuest;
 import org.animetwincities.animedetour.guests.model.Guest;
 import org.animetwincities.animedetour.guests.model.GuestRepository;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,18 +74,16 @@ public class GuestsFragment extends BaseFragment
         this.guestList.setAdapter(guestsAdapter);
     }
 
-    private void test(HashMap<String, FirebaseGuest> test) {
-
-    }
-
     private void loadGuestsIntoUi(List<Guest> guests) {
         this.guestsAdapter.setGuestList(guests);
     }
 
-    private void onClickGuest(Guest guest) {
+    private void onClickGuest(Pair<View, Guest> viewGuestPair) {
         Intent detailIntent = new Intent(getContext(), GuestDetailActivity.class);
-        detailIntent.putExtra(GuestDetailActivity.KEY_GUEST_ID, guest.getId());
-        startActivity(detailIntent);
+        detailIntent.putExtra(GuestDetailActivity.KEY_GUEST_ID, viewGuestPair.second.getId());
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                viewGuestPair.first, "guest_image");
+        startActivity(detailIntent, optionsCompat.toBundle());
     }
 
 }
