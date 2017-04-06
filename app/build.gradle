@@ -31,6 +31,7 @@ android {
             applicationIdSuffix '.debug'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled project.hasProperty("supportLevel")
+            multiDexEnabled !project.hasProperty("supportLevel")
             debuggable true
         }
         release {
