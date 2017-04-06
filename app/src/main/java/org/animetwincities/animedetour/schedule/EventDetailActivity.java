@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,12 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.google.common.base.Joiner;
 import icepick.State;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 import io.reactivex.disposables.CompositeDisposable;
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 import org.animetwincities.animedetour.R;
+import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.auth.AuthRepository;
 import org.animetwincities.animedetour.framework.auth.User;
@@ -45,6 +44,9 @@ public class EventDetailActivity extends BaseActivity
 
     @Inject
     Logger logger;
+
+    @Inject
+    AppConfig config;
 
     @Inject
     EventNotificationManager notificationManager;
@@ -78,6 +80,9 @@ public class EventDetailActivity extends BaseActivity
 
     @BindView(R.id.event_detail_speakers)
     TextView speakers;
+
+    @BindView(R.id.event_detail_type_container)
+    View detailStrip;
 
     @State
     boolean favorite;
@@ -166,6 +171,7 @@ public class EventDetailActivity extends BaseActivity
         bio.setText(event.getDescription());
         timePlace.setText(getEventDetailsString(event));
         eventType.setText(event.getCategory());
+        detailStrip.setBackgroundColor(config.getEventPalette(event.getCategory()));
         setAgeWarning(event);
         setTags(event);
         setHosts(event);

@@ -1,6 +1,8 @@
 package org.animetwincities.animedetour.framework;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import com.google.android.gms.tasks.Task;
@@ -9,6 +11,7 @@ import inkapplicaitons.android.logger.Logger;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import org.animetwincities.animedetour.R;
 import org.animetwincities.rxfirebase.FirebaseObservables;
 
 import javax.inject.Inject;
@@ -34,12 +37,14 @@ public class AppConfig
     final private Logger logger;
     final private FirebaseRemoteConfig remoteConfig;
     final private SharedPreferences sharedPreferences;
+    final private Context context;
 
     @Inject
-    public AppConfig(Logger logger, FirebaseRemoteConfig remoteConfig, SharedPreferences sharedPreferences) {
+    public AppConfig(Logger logger, FirebaseRemoteConfig remoteConfig, SharedPreferences sharedPreferences, Context context) {
         this.logger = logger;
         this.remoteConfig = remoteConfig;
         this.sharedPreferences = sharedPreferences;
+        this.context = context;
     }
 
     /**
@@ -63,8 +68,8 @@ public class AppConfig
         String configColor = this.remoteConfig.getString(key);
 
         if (null == configColor || configColor.isEmpty()) {
-            this.logger.error("Unconfigured category given for palette: %s – defaulting to transparent", key);
-            return Color.TRANSPARENT;
+            this.logger.error("Unconfigured category given for palette: %s – defaulting to grey", key);
+            return context.getResources().getColor(R.color.md_grey_700);
         }
 
         try {
@@ -72,7 +77,7 @@ public class AppConfig
         } catch (IllegalArgumentException error) {
             this.logger.error("Invalid color given for palette: %s – got color: %s", key, configColor);
 
-            return Color.TRANSPARENT;
+            return context.getResources().getColor(R.color.md_grey_700);
         }
     }
 

@@ -3,7 +3,6 @@ package org.animetwincities.animedetour.schedule;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.GenericTypeIndicator;
 import inkapplicaitons.android.logger.Logger;
-import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeParseException;
 
 import javax.inject.Inject;
@@ -43,8 +42,8 @@ public class EventTransformer
             FirebaseEvent eventData = map.get(key);
             try {
                 events.add(new Event(key, eventData));
-            } catch (DateTimeParseException pareError) {
-                logger.error(pareError, "Problem deserializing event times.");
+            } catch (DateTimeParseException | NullPointerException parseError) {
+                logger.error(parseError, "Problem deserializing event times for event: " + key);
             }
         }
 
