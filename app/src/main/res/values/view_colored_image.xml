@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2014 Ink Applications, LLC.
+    Distributed under the MIT License (http://opensource.org/licenses/MIT)
+-->
+<resources>
+    <declare-styleable name="ColoredImageView">
+        <attr name="colorOverlay" format="color" />
+    </declare-styleable>
+</resources>

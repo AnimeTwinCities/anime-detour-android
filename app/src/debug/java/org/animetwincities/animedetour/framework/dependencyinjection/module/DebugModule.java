@@ -29,7 +29,7 @@ public class DebugModule
     @AvailableInDebug
     public Logger getLogger()
     {
-        return new ConsoleLogger(1);
+        return new ConsoleLogger(2);
     }
 
     @Provides

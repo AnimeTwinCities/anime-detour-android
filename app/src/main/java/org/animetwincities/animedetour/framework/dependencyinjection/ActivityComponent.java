@@ -1,12 +1,15 @@
 package org.animetwincities.animedetour.framework.dependencyinjection;
 
 import org.animetwincities.animedetour.MainActivity;
+import org.animetwincities.animedetour.SplashActivity;
 import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
-import org.animetwincities.animedetour.guests.ui.GuestDetailActivity;
-import org.animetwincities.animedetour.guests.ui.GuestDetailFragment;
-import org.animetwincities.animedetour.guests.ui.GuestsFragment;
+import org.animetwincities.animedetour.guest.GuestDetailActivity;
+import org.animetwincities.animedetour.guest.GuestDetailFragment;
+import org.animetwincities.animedetour.guest.GuestIndexFragment;
+import org.animetwincities.animedetour.schedule.DayFragment;
+import org.animetwincities.animedetour.schedule.EventDetailActivity;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import dagger.Subcomponent;
@@ -36,9 +39,12 @@ public interface ActivityComponent
     void inject(BaseFragment baseFragment);
 
     void inject(MainActivity target);
-    void inject(ScheduleFragment target);
-
-    void inject(GuestsFragment target);
+    void inject(SplashActivity target);
     void inject(GuestDetailActivity target);
+    void inject(EventDetailActivity target);
+
+    void inject(ScheduleFragment target);
+    void inject(GuestIndexFragment target);
     void inject(GuestDetailFragment target);
+    void inject(DayFragment target);
 }

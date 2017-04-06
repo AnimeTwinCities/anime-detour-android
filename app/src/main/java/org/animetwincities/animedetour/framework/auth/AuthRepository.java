@@ -3,6 +3,7 @@ package org.animetwincities.animedetour.framework.auth;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -37,5 +38,15 @@ public class AuthRepository
             .observeOn(Schedulers.computation())
             .map(authResult -> new User(authResult.getUser().getUid()))
             .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public User getCurrentUser()
+    {
+        FirebaseUser firebaseUser = firebase.getCurrentUser();
+        if (firebaseUser == null) {
+            return null;
+        }
+
+        return new User(firebaseUser.getUid());
     }
 }

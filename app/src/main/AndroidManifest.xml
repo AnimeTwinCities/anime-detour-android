@@ -11,15 +11,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:name=".framework.AnimeDetourApplication">
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".SplashActivity"
+                android:noHistory="true"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".guests.ui.GuestDetailActivity"
+        <activity android:name=".guest.GuestDetailActivity"
             android:theme="@style/AppTheme.Translucent"/>
+        <activity android:name=".schedule.EventDetailActivity"
+            android:theme="@style/AppTheme.Translucent"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

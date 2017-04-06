@@ -22,12 +22,18 @@ class RxValueEventAdapter implements ValueEventListener
     @Override
     public void onDataChange(DataSnapshot dataSnapshot)
     {
-        this.emitter.onNext(dataSnapshot);
+        if (emitter.isDisposed()) {
+            return;
+        }
+        emitter.onNext(dataSnapshot);
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError)
     {
-        this.emitter.onError(new ThrowableDatabaseError(databaseError));
+        if (emitter.isDisposed()) {
+            return;
+        }
+        emitter.onError(new ThrowableDatabaseError(databaseError));
     }
 }

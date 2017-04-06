@@ -56,6 +56,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:cardview-v7:25.2.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.6'
 
@@ -78,12 +79,15 @@ dependencies {
     compile 'com.github.InkApplications:android-layout-injector:1.1.0'
     compile 'com.github.InkApplications:guava-stopwatch:21.0'
     compile 'com.github.InkApplications:android-application-lifecycle:1.0.1'
+    compile 'com.github.InkApplications:android-simple-recycler-view:v1.0.2'
 
     compile 'com.facebook.fresco:fresco:1.1.0'
     compile "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
 
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
     compile('com.mikepenz:materialdrawer:5.8.2@aar') {
         transitive = true

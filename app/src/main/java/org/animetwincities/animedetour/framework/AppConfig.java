@@ -1,7 +1,11 @@
 package org.animetwincities.animedetour.framework;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import inkapplicaitons.android.logger.Logger;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -11,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Application Configuration settings.
@@ -24,19 +29,75 @@ import java.util.Map;
 @Singleton
 public class AppConfig
 {
-    final static private String TEST_HEADLINE = "test_headline";
+    final static private String YEAR = "year";
 
+    final private Logger logger;
     final private FirebaseRemoteConfig remoteConfig;
+    final private SharedPreferences sharedPreferences;
 
     @Inject
-    public AppConfig(FirebaseRemoteConfig remoteConfig) {
+    public AppConfig(Logger logger, FirebaseRemoteConfig remoteConfig, SharedPreferences sharedPreferences) {
+        this.logger = logger;
         this.remoteConfig = remoteConfig;
+        this.sharedPreferences = sharedPreferences;
     }
 
-    /** Just a test */
-    public String getTestHeadline()
+    /**
+     * Get a palette color to associate with an event.
+     *
+     * In the case that no color is configured for the category type, this will
+     * return a transparent hex code.
+     *
+     * @param category The category of an event to get a color for.
+     * @return A Hex code string.
+     */
+    @ColorInt
+    public int getEventPalette(String category)
     {
-        return this.remoteConfig.getString(TEST_HEADLINE);
+        if (null == category) {
+            this.logger.error("Null category name given on palette lookup! Defaulting to transparent");
+            return Color.TRANSPARENT;
+        }
+
+        String key = "palette_event_" + category.replace(" ", "_").toLowerCase();
+        String configColor = this.remoteConfig.getString(key);
+
+        if (null == configColor || configColor.isEmpty()) {
+            this.logger.error("Unconfigured category given for palette: %s – defaulting to transparent", key);
+            return Color.TRANSPARENT;
+        }
+
+        try {
+            return Color.parseColor(configColor);
+        } catch (IllegalArgumentException error) {
+            this.logger.error("Invalid color given for palette: %s – got color: %s", key, configColor);
+
+            return Color.TRANSPARENT;
+        }
+    }
+
+    /**
+     * Get the Schedule ID that is to be displayed.
+     */
+    public String getSchedule()
+    {
+        return remoteConfig.getString(YEAR);
+    }
+
+    /**
+     * @return Whether the app has completed loading the current schedule data.
+     */
+    public boolean hasLoadedSchedule()
+    {
+        return this.sharedPreferences.getBoolean("loaded_schedule_" + getSchedule(), false);
+    }
+
+    /**
+     * Mark the current schedule data as loaded to prevent any further preloading.
+     */
+    public void setScheduleLoaded()
+    {
+        this.sharedPreferences.edit().putBoolean("loaded_schedule_" + getSchedule(), true).apply();
     }
 
     /**
@@ -51,6 +112,7 @@ public class AppConfig
 
         return FirebaseObservables.fromVoidTask(updateTask)
             .subscribeOn(Schedulers.io())
+            .timeout(1, TimeUnit.SECONDS)
             .doOnComplete(remoteConfig::activateFetched)
             .observeOn(AndroidSchedulers.mainThread());
     }
@@ -65,7 +127,7 @@ public class AppConfig
     {
         HashMap<String, Object> defaults = new HashMap<>();
 
-        defaults.put(TEST_HEADLINE, "Hello Wald!");
+        defaults.put(YEAR, "ad-2017");
 
         return defaults;
     }

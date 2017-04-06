@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EventRowView">
+        <attr name="name" format="string" />
+        <attr name="description" format="string" />
+    </declare-styleable>
+    <string name="event_row_time_location_format">%1$s in %2$s</string>
+</resources>

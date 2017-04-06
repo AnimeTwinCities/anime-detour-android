@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Anime Detour Android v3</string>
+    <string name="app_name">Anime Detour</string>
+    <string name="event_list_empty_message">No events to show.</string>
+    <string name="splash_loading_data">Loading Data...</string>
+    <string name="event_detail_hearing_icon">Hearing Icon</string>
+    <string name="event_detail_asl_caption">This event will be ASL interpreted</string>
+    <string name="event_detail_time_place_format">%1$s - %2$s in %3$s</string>
+    <string name="event_detail_time_place_format_room_missing">%1$s - %2$s</string>
+    <string name="event_day_time_format">EEE, hh:mma</string>
+    <string name="event_time_format">hh:mma</string>
+    <string name="event_age_warning">Parts of this event may be restricted to %s \nYou may be required to show your ID before entering.</string>
 </resources>

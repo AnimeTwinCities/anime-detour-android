@@ -1,26 +1,51 @@
 package org.animetwincities.animedetour.schedule;
 
-import inkapplicaitons.android.logger.Logger;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import butterknife.BindView;
+import com.inkapplications.logger.RxLogger;
+import icepick.State;
 import inkapplications.android.layoutinjector.Layout;
 import io.reactivex.disposables.CompositeDisposable;
 import org.animetwincities.animedetour.R;
+import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseFragment;
-import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.threeten.bp.LocalDate;
 
 import javax.inject.Inject;
 import java.util.List;
 
-@Layout(R.layout.fragment_schedule)
+/**
+ * Shows a pager with each fragment representing one day of the schedule.
+ */
+@Layout(R.layout.schedule)
 public class ScheduleFragment extends BaseFragment
 {
     @Inject
     ScheduleRepository scheduleRepository;
 
     @Inject
-    Logger logger;
+    RxLogger logger;
+
+    @BindView(R.id.schedule_pager)
+    ViewPager pager;
+
+    @BindView(R.id.schedule_pager_tabs)
+    TabLayout tabs;
+
+    @BindView(R.id.schedule_list_empty)
+    View emptyView;
+
+    @BindView(R.id.schedule_loading_indicator)
+    View loadingIndicator;
+
+    @State
+    int position;
 
     private CompositeDisposable disposables;
+    private MultiDayPagerAdapter adapter;
 
     @Override
     public void injectSelf(ActivityComponent component)
@@ -29,29 +54,55 @@ public class ScheduleFragment extends BaseFragment
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
-        disposables = new CompositeDisposable();
-    }
 
-    @Override
-    public void onNewUser(User user) {
-        super.onNewUser(user);
+        adapter = new MultiDayPagerAdapter(getChildFragmentManager());
+        pager.setAdapter(adapter);
+        tabs.setupWithViewPager(pager);
+        disposables = new CompositeDisposable();
+
         disposables.add(
-            scheduleRepository.observeEvents("ad-2017").subscribe(this::newEvents)
+            scheduleRepository.observeDays().subscribe(this::onDaysLoaded, this::onLoadError)
         );
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
+        super.onPause();
+        position = pager.getCurrentItem();
+    }
+
+    @Override
+    public void onStop()
+    {
         super.onStop();
         disposables.dispose();
     }
 
-    public void newEvents(List<Event> events)
+    private void onDaysLoaded(List<LocalDate> days)
     {
-        for (Event event : events) {
-            logger.debug(event.toString());
+        loadingIndicator.setVisibility(View.GONE);
+
+        if (days.isEmpty()) {
+            logger.warn("List of days was empty");
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            logger.debug("Found %s days", days.size());
+            emptyView.setVisibility(View.GONE);
+            adapter.setDays(days);
+            pager.setCurrentItem(position);
+        }
+    }
+
+    private void onLoadError(Throwable error)
+    {
+        logger.error(error, "Problem loading schedule days");
+
+        if (adapter.getCount() == 0) {
+            loadingIndicator.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
         }
     }
 }

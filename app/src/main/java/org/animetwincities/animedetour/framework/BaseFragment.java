@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.ButterKnife;
 import icepick.Icepick;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
 import inkapplications.android.layoutinjector.LayoutNotSpecifiedException;
+import inkapplications.guava.Stopwatch;
 import io.reactivex.disposables.CompositeDisposable;
 import org.animetwincities.animedetour.framework.auth.AuthRepository;
 import org.animetwincities.animedetour.framework.auth.User;
@@ -18,19 +20,13 @@ import org.animetwincities.animedetour.framework.dependencyinjection.ActivityCom
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerActivityComponentAware;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
-import org.animetwincities.animedetour.framework.stopwatch.LimitTimer;
-import org.animetwincities.animedetour.framework.stopwatch.TimerFactory;
 
 import javax.inject.Inject;
-import java.util.concurrent.TimeUnit;
 
 abstract public class BaseFragment extends Fragment implements DaggerActivityComponentAware
 {
     @Inject
     Logger logger;
-
-    @Inject
-    TimerFactory timerFactory;
 
     @Inject
     AuthRepository auth;
@@ -40,13 +36,14 @@ abstract public class BaseFragment extends Fragment implements DaggerActivityCom
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
+        Stopwatch timer = Stopwatch.createStarted();
         super.onActivityCreated(savedInstanceState);
         this.initializeInjections();
-        LimitTimer timer = this.timerFactory.startForLimit("Activity Initialize", 500, TimeUnit.MILLISECONDS);
-        this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
+        this.logger.trace("Fragment Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
         Icepick.restoreInstanceState(this, savedInstanceState);
+        ButterKnife.bind(this, getView());
 
-        timer.finish();
+        logger.debug("Fragment onActivityCreated took %s", timer.stop());
     }
 
     @Nullable
@@ -67,7 +64,7 @@ abstract public class BaseFragment extends Fragment implements DaggerActivityCom
 
         this.disposables = new CompositeDisposable();
         this.disposables.add(
-            this.auth.signInAnonymously().subscribe(this::onNewUser)
+            this.auth.signInAnonymously().subscribe(this::onNewUser, error -> {})
         );
     }
 

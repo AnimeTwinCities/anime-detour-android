@@ -4,21 +4,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import butterknife.ButterKnife;
+import com.inkapplications.logger.RxLogger;
 import icepick.Icepick;
-import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.LayoutInjector;
+import inkapplications.guava.Stopwatch;
+import io.reactivex.disposables.CompositeDisposable;
 import org.animetwincities.animedetour.framework.auth.AuthRepository;
 import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerActivityComponentAware;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidActivityModule;
-import org.animetwincities.animedetour.framework.stopwatch.LimitTimer;
-import org.animetwincities.animedetour.framework.stopwatch.TimerFactory;
 
 import javax.inject.Inject;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Boilerplate activity pre-configured to run framework utilities.
@@ -29,30 +29,26 @@ import java.util.concurrent.TimeUnit;
 abstract public class BaseActivity extends AppCompatActivity implements DaggerActivityComponentAware
 {
     @Inject
-    Logger logger;
-
-    @Inject
-    TimerFactory timerFactory;
-
-    @Inject
-    AppConfig appConfig;
+    RxLogger logger;
 
     @Inject
     AuthRepository authRepository;
 
+    private CompositeDisposable disposables = new CompositeDisposable();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
+        Stopwatch timer = Stopwatch.createStarted();
         super.onCreate(savedInstanceState);
 
         this.initializeInjections();
-        LimitTimer timer = this.timerFactory.startForLimit("Activity Initialize", 500, TimeUnit.MILLISECONDS);
         this.logger.trace("Activity Lifecycle: %s.onCreate()", this.getClass().getSimpleName());
         LayoutInjector.injectContentView(this);
         ButterKnife.bind(this);
         Icepick.restoreInstanceState(this, savedInstanceState);
 
-        timer.finish();
+        logger.debug("Activity onCreate took %s", timer.stop());
     }
 
     @Override
@@ -60,9 +56,11 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     {
         super.onStart();
         this.logger.trace("Activity Lifecycle: %s.onStart()", this.getClass().getSimpleName());
-
-        this.appConfig.update().subscribe(() -> onNewConfig(this.appConfig));
-        this.authRepository.signInAnonymously().subscribe(this::onNewUser);
+        disposables.dispose();
+        disposables = new CompositeDisposable();
+        disposables.addAll(
+            authRepository.signInAnonymously().subscribe(this::onNewUser, error -> logger.error(error, "Problem Signing In Anonymously"))
+        );
     }
 
     @Override
@@ -77,20 +75,6 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     protected void onPostResume() {
         super.onPostResume();
         this.logger.trace("Activity Lifecycle: %s.onPostResume()", this.getClass().getSimpleName());
-        this.onNewConfig(this.appConfig);
-    }
-
-    /**
-     * Invoked when a new Application config is available.
-     *
-     * If the Activity has code that can be changed with a remote config, it
-     * should be updated here.
-     * This is Invoked sometime after OnStart. if a listener is created here,
-     * it is safest to unsubscribe int the corresponding onStop method.
-     */
-    protected void onNewConfig(AppConfig config)
-    {
-        this.logger.trace("Activity Event: %s.onNewConfig()", this.getClass().getSimpleName());
     }
 
     /**
@@ -119,6 +103,7 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
     {
         super.onStop();
         this.logger.trace("Activity Lifecycle: %s.onStop()", this.getClass().getSimpleName());
+        disposables.dispose();
     }
 
     @Override
@@ -140,5 +125,15 @@ abstract public class BaseActivity extends AppCompatActivity implements DaggerAc
 
         activityComponent.inject(this);
         this.injectSelf(activityComponent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return false;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

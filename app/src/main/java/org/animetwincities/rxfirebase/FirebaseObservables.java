@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Creates Rx Observable objects from Firebase/Google callbacks.
@@ -25,7 +26,9 @@ public class FirebaseObservables
      */
     public static Completable fromVoidTask(Task<Void> task)
     {
-        return Completable.create(new CompletableTaskOnSubscribe(task));
+        CompositeDisposable disposables = new CompositeDisposable();
+        return Completable.create(new CompletableTaskOnSubscribe(disposables, task))
+            .doFinally(disposables::dispose);
     }
 
     /**
@@ -40,7 +43,9 @@ public class FirebaseObservables
      */
     public static <RESULT> Observable<RESULT> fromTask(Task<RESULT> authResultTask)
     {
-        return Observable.create(new ResultTaskOnSubscribe<>(authResultTask));
+        CompositeDisposable disposables = new CompositeDisposable();
+        return Observable.create(new ResultTaskOnSubscribe<>(disposables, authResultTask))
+            .doFinally(disposables::dispose);
     }
 
     /**
@@ -52,6 +57,8 @@ public class FirebaseObservables
      */
     public static Observable<DataSnapshot> fromQuery(Query query)
     {
-        return Observable.create(new QueryOnSubscribe(query));
+        CompositeDisposable disposables = new CompositeDisposable();
+        return Observable.create(new QueryOnSubscribe(disposables, query))
+            .doFinally(disposables::dispose);
     }
 }

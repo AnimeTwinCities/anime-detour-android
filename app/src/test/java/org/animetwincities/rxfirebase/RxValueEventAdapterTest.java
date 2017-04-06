@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -17,17 +16,14 @@ public class RxValueEventAdapterTest
     @Mock
     ObservableEmitter<DataSnapshot> emitter;
 
-    @Mock
-    DataSnapshot snapshot;
-
     @Test
     public void newValue() throws Exception
     {
         RxValueEventAdapter adapter = new RxValueEventAdapter(emitter);
 
-        adapter.onDataChange(snapshot);
+        adapter.onDataChange(null);
 
-        verify(emitter, times(1)).onNext(snapshot);
+        verify(emitter, times(1)).onNext(null);
         verify(emitter, never()).onError(any());
         verify(emitter, never()).onComplete();
     }

@@ -32,6 +32,7 @@ public class FrescoInitializer extends Initializer
         ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
             .newBuilder(application, this.httpClient)
             .build();
+
         Fresco.initialize(application, config);
     }
 }

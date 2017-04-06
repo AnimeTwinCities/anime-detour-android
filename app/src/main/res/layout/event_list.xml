@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+    <ListView
+            android:id="@+id/event_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+    />
+
+    <RelativeLayout
+            android:id="@+id/event_list_empty"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+        <org.animetwincities.animedetour.framework.view.ColoredImageView
+                android:id="@+id/event_list_empty_logo"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_ad"
+                app:colorOverlay="@color/accent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/event_list_empty_logo"
+                android:layout_centerInParent="true"
+                android:layout_margin="16dp"
+                android:textStyle="italic"
+                android:text="@string/event_list_empty_message"/>
+    </RelativeLayout>
+
+    <ProgressBar
+            android:id="@+id/events_loading_indicator"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+</FrameLayout>

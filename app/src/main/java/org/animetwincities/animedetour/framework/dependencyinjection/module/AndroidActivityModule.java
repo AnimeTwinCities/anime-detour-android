@@ -1,6 +1,8 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +14,8 @@ import android.view.WindowManager;
 import dagger.Module;
 import dagger.Provides;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityScope;
+
+import javax.inject.Singleton;
 
 /**
  * Android Activity Services.

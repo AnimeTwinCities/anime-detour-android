@@ -1,6 +1,5 @@
 package org.animetwincities.animedetour;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -9,16 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.view.DraweeTransition;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.animetwincities.animedetour.framework.BaseActivity;
+import org.animetwincities.animedetour.framework.Transitions;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
-import org.animetwincities.animedetour.guests.ui.GuestsFragment;
+import org.animetwincities.animedetour.guest.GuestIndexFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
@@ -27,13 +25,13 @@ import butterknife.BindView;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 
-@Layout(R.layout.activity_main)
+@Layout(R.layout.fragment_container)
 public class MainActivity extends BaseActivity
 {
     @Inject
     Logger logger;
 
-    @BindView(R.id.toolbar)
+    @BindView(R.id.fragment_container_toolbar)
     Toolbar toolbar;
 
     @Override
@@ -41,24 +39,19 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
 
-        ScheduleFragment scheduleFragment = new ScheduleFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, scheduleFragment).commit();
+        Transitions.draweeCropTransition(this);
+        initializeNavigation();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setSharedElementEnterTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
-                    ScalingUtils.ScaleType.CENTER_CROP));
-            getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
-                    ScalingUtils.ScaleType.CENTER_CROP));
+        if (null == savedInstanceState) {
+            this.showSchedule(null, 0, null);
         }
-
-
-        this.initializeNavigation();
     }
 
     @Override
     protected void onStart()
     {
         super.onStart();
+
     }
 
     @Override
@@ -67,10 +60,13 @@ public class MainActivity extends BaseActivity
         component.inject(this);
     }
 
-    /** Show the full app fragment_schedule. */
+    /** Show the full app schedule. */
     private boolean showSchedule(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing Schedule");
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, scheduleFragment).commit();
+
         return false;
     }
 
@@ -86,8 +82,8 @@ public class MainActivity extends BaseActivity
     {
         this.logger.trace("Showing Guest List");
 
-        getSupportFragmentManager().beginTransaction().addToBackStack("")
-                .replace(R.id.fragment_container, GuestsFragment.newInstance()).commit();
+        GuestIndexFragment fragment = new GuestIndexFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
 
         return false;
     }

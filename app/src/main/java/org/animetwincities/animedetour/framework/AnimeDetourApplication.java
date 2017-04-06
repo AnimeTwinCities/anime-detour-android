@@ -6,6 +6,7 @@ import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubs
 import inkapplicaitons.android.logger.Logger;
 import org.animetwincities.animedetour.framework.dependencyinjection.ApplicationComponent;
 import org.animetwincities.animedetour.framework.dependencyinjection.DaggerApplicationComponent;
+import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidApplicationModule;
 
 import javax.inject.Inject;
 
@@ -59,6 +60,7 @@ public class AnimeDetourApplication extends Application
     private void initializeInjections()
     {
         DaggerApplicationComponent.Builder builder = DaggerApplicationComponent.builder();
+        builder.androidApplicationModule(new AndroidApplicationModule(this));
 
         this.applicationComponent = builder.build();
         this.applicationComponent.inject(this);
