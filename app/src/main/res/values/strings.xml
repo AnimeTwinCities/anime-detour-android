@@ -9,4 +9,10 @@
     <string name="event_day_time_format">EEE, hh:mma</string>
     <string name="event_time_format">hh:mma</string>
     <string name="event_age_warning">Parts of this event may be restricted to %s \nYou may be required to show your ID before entering.</string>
+
+    <string name="map_control_first_floor">1</string>
+    <string name="map_control_second_floor">2</string>
+    <string name="map_control_22nd_floor">22</string>
+    <string name="missing_google_play_services_error_message">Oh no! We can\'t show you this map, since you don\'t have Google Play Services!</string>
+    <string name="google_play_services_button_label">Get Google Play Services</string>
 </resources>

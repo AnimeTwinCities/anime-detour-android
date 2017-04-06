@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <Button
+        android:id="@+id/map_control_first_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/map_control_first_floor"
+    />
+    <Button
+        android:id="@+id/map_control_second_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_first_floor"
+        android:text="@string/map_control_second_floor"
+    />
+    <Button
+        android:id="@+id/map_control_22nd_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_second_floor"
+        android:text="@string/map_control_22nd_floor"
+    />
+
+    <LinearLayout
+        android:id="@+id/map_missing_services_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/missing_google_play_services_error_message"/>
+
+        <Button
+            android:id="@+id/get_services_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/google_play_services_button_label"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

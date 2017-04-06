@@ -6,6 +6,7 @@ import org.animetwincities.animedetour.framework.dependencyinjection.module.Andr
 import org.animetwincities.animedetour.framework.dependencyinjection.module.Application3rdPartyModule;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidApplicationModule;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.DebugModule;
+import org.animetwincities.animedetour.map.HotelMapFragment;
 
 import javax.inject.Singleton;
 
@@ -20,6 +21,7 @@ import javax.inject.Singleton;
 public interface ApplicationComponent
 {
     void inject(AnimeDetourApplication application);
+    void inject(HotelMapFragment target);
 
     ActivityComponent newActivityComponent(AndroidActivityModule module);
 }

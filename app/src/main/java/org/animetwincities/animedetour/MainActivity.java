@@ -17,6 +17,7 @@ import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.Transitions;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.guest.GuestIndexFragment;
+import org.animetwincities.animedetour.map.HotelMapFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
@@ -70,13 +71,6 @@ public class MainActivity extends BaseActivity
         return false;
     }
 
-    /** Show the "What's New" page. */
-    private boolean showNew(View view, int i, IDrawerItem iDrawerItem)
-    {
-        this.logger.trace("Showing What's New");
-        return false;
-    }
-
     /** Show the Guests List. */
     private boolean showGuests(View view, int i, IDrawerItem iDrawerItem)
     {
@@ -99,6 +93,9 @@ public class MainActivity extends BaseActivity
     private boolean showMap(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing Map");
+
+        HotelMapFragment fragment = new HotelMapFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
         return false;
     }
 
@@ -120,10 +117,9 @@ public class MainActivity extends BaseActivity
             .withActivity(this)
             .withToolbar(toolbar)
             .addDrawerItems(
-                createNavigationItem(R.string.main_menu_new, R.drawable.ic_home_black_24dp, this::showNew),
-                createNavigationItem(R.string.main_menu_guests, R.drawable.ic_people_black_24dp, this::showGuests),
-                createNavigationItem(R.string.main_menu_favorites, R.drawable.ic_stars_black_24dp, this::showFavorites),
                 createNavigationItem(R.string.main_menu_schedule, R.drawable.ic_list_black_24dp, this::showSchedule),
+                createNavigationItem(R.string.main_menu_favorites, R.drawable.ic_stars_black_24dp, this::showFavorites),
+                createNavigationItem(R.string.main_menu_guests, R.drawable.ic_people_black_24dp, this::showGuests),
                 createNavigationItem(R.string.main_menu_map, R.drawable.ic_map_black_24dp, this::showMap)
             )
             .withStickyFooter(

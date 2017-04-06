@@ -11,6 +11,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:name=".framework.AnimeDetourApplication">
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBdBsLmgR18zQ1DxiGIBNEDvwU1jbzzuxY"/>
         <activity
                 android:name=".SplashActivity"
                 android:noHistory="true"
