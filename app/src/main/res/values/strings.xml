@@ -15,4 +15,8 @@
     <string name="map_control_22nd_floor">22</string>
     <string name="missing_google_play_services_error_message">Oh no! We can\'t show you this map, since you don\'t have Google Play Services!</string>
     <string name="google_play_services_button_label">Get Google Play Services</string>
+    <string name="notification_description">Event is starting soon</string>
+    <string name="settings_application_version">Application version %1$s build %2$s</string>
+    <string name="settings_event_notifications">Event Notifications</string>
+    <string name="legal">Copyright © 2014-2015 Anime Twin Cities, Inc. \nAll Rights Reserved. \n\n"Material Design Icons" copyright Google Inc. Licensed under Creative Commons Attribution 4.0</string>
 </resources>

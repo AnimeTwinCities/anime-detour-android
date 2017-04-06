@@ -8,9 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.animetwincities.animedetour.framework.BaseActivity;
@@ -26,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
+import org.animetwincities.animedetour.settings.SettingsFragment;
 
 @Layout(R.layout.fragment_container)
 public class MainActivity extends BaseActivity
@@ -106,6 +110,8 @@ public class MainActivity extends BaseActivity
     private boolean showSettings(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing Settings Page");
+        SettingsFragment fragment = new SettingsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
         return false;
     }
 
@@ -123,10 +129,15 @@ public class MainActivity extends BaseActivity
                 createNavigationItem(R.string.main_menu_schedule, R.drawable.ic_list_black_24dp, this::showSchedule),
                 createNavigationItem(R.string.main_menu_favorites, R.drawable.ic_stars_black_24dp, this::showFavorites),
                 createNavigationItem(R.string.main_menu_guests, R.drawable.ic_people_black_24dp, this::showGuests),
-                createNavigationItem(R.string.main_menu_map, R.drawable.ic_map_black_24dp, this::showMap)
+                createNavigationItem(R.string.main_menu_map, R.drawable.ic_map_black_24dp, this::showMap),
+                new DividerDrawerItem(),
+                createNavigationItem(R.string.main_menu_settings, R.drawable.ic_settings_black_24dp, this::showSettings)
             )
-            .withStickyFooter(
-                (ViewGroup) createNavigationItem(R.string.main_menu_settings, R.drawable.ic_home_black_24dp, this::showSettings).generateView(this)
+            .withAccountHeader(
+                new AccountHeaderBuilder()
+                    .withActivity(this)
+                    .withHeaderBackground(R.drawable.banner)
+                    .build()
             )
             .build();
     }

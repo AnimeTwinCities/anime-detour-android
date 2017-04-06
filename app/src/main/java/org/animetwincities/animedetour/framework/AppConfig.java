@@ -131,4 +131,12 @@ public class AppConfig
 
         return defaults;
     }
+
+    public boolean receiveEventNotifications() {
+        return this.sharedPreferences.getBoolean("event_notifications_" + getSchedule(), true);
+    }
+
+    public void setEventNotifications(boolean enabled) {
+        this.sharedPreferences.edit().putBoolean("event_notifications_" + getSchedule(), enabled).apply();
+    }
 }

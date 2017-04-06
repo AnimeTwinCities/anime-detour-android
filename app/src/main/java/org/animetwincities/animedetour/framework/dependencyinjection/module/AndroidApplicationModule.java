@@ -1,5 +1,6 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -139,5 +140,12 @@ public class AndroidApplicationModule {
     public SharedPreferences sharedPreferences()
     {
         return this.application.getSharedPreferences("ApplicationPreferences", Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @Singleton
+    public AlarmManager alarmManager()
+    {
+        return (AlarmManager) this.application.getSystemService(Context.ALARM_SERVICE);
     }
 }

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.animetwincities.animedetour">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -27,6 +28,16 @@
         <activity android:name=".schedule.EventDetailActivity"
             android:theme="@style/AppTheme.Translucent"/>
         <activity android:name=".MainActivity" />
+
+        <receiver android:name=".schedule.notification.UpcomingEventReciever" />
+        <receiver
+                android:name=".schedule.notification.NotificationScheduler"
+                android:enabled="true"
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

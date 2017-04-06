@@ -6,6 +6,7 @@
     <color name="danger">@color/md_red_500</color>
     <color name="starred">@color/md_yellow_700</color>
     <color name="background">#ffffffff</color>
+    <color name="background_inverse">@color/md_grey_900</color>
     <color name="background_faded">#99fafafa</color>
     <color name="foreground">@color/md_grey_900</color>
     <color name="foreground_inverse">@color/md_grey_50</color>

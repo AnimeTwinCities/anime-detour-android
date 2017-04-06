@@ -7,6 +7,8 @@ import org.animetwincities.animedetour.framework.dependencyinjection.module.Appl
 import org.animetwincities.animedetour.framework.dependencyinjection.module.AndroidApplicationModule;
 import org.animetwincities.animedetour.framework.dependencyinjection.module.DebugModule;
 import org.animetwincities.animedetour.map.HotelMapFragment;
+import org.animetwincities.animedetour.schedule.notification.NotificationScheduler;
+import org.animetwincities.animedetour.schedule.notification.UpcomingEventReciever;
 
 import javax.inject.Singleton;
 
@@ -22,6 +24,8 @@ public interface ApplicationComponent
 {
     void inject(AnimeDetourApplication application);
     void inject(HotelMapFragment target);
+    void inject(NotificationScheduler target);
+    void inject(UpcomingEventReciever target);
 
     ActivityComponent newActivityComponent(AndroidActivityModule module);
 }

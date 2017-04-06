@@ -25,6 +25,7 @@ import org.animetwincities.animedetour.framework.BaseActivity;
 import org.animetwincities.animedetour.framework.auth.AuthRepository;
 import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
+import org.animetwincities.animedetour.schedule.notification.EventNotificationManager;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -44,6 +45,9 @@ public class EventDetailActivity extends BaseActivity
 
     @Inject
     Logger logger;
+
+    @Inject
+    EventNotificationManager notificationManager;
 
     @BindView(R.id.event_detail_toolbar)
     Toolbar toolbar;
@@ -142,8 +146,10 @@ public class EventDetailActivity extends BaseActivity
         }
         if (favorite) {
             scheduleRepository.unfavoriteEvent(user.getId(), getEventId());
+            notificationManager.cancelNotification(getEventId());
         } else {
             scheduleRepository.favoriteEvent(user.getId(), getEventId());
+            disposables.add(notificationManager.scheduleNotification(getEventId()));
         }
     }
 
@@ -202,7 +208,7 @@ public class EventDetailActivity extends BaseActivity
 
     private void setHosts(Event event)
     {
-        if (event.getHosts() == null && event.getHosts().isEmpty()) {
+        if (event.getHosts() == null || event.getHosts().isEmpty()) {
             return;
         }
 
