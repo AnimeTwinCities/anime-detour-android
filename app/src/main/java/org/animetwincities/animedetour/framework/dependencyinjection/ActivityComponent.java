@@ -10,6 +10,7 @@ import org.animetwincities.animedetour.guest.GuestDetailFragment;
 import org.animetwincities.animedetour.guest.GuestIndexFragment;
 import org.animetwincities.animedetour.schedule.DayFragment;
 import org.animetwincities.animedetour.schedule.EventDetailActivity;
+import org.animetwincities.animedetour.schedule.FavoritesFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import dagger.Subcomponent;
@@ -47,4 +48,5 @@ public interface ActivityComponent
     void inject(GuestIndexFragment target);
     void inject(GuestDetailFragment target);
     void inject(DayFragment target);
+    void inject(FavoritesFragment target);
 }

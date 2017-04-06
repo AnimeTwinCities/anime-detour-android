@@ -18,6 +18,7 @@ import org.animetwincities.animedetour.framework.Transitions;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.animetwincities.animedetour.guest.GuestIndexFragment;
 import org.animetwincities.animedetour.map.HotelMapFragment;
+import org.animetwincities.animedetour.schedule.FavoritesFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import javax.inject.Inject;
@@ -86,6 +87,8 @@ public class MainActivity extends BaseActivity
     private boolean showFavorites(View view, int i, IDrawerItem iDrawerItem)
     {
         this.logger.trace("Showing User Favorites");
+        FavoritesFragment fragment = new FavoritesFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
         return false;
     }
 
