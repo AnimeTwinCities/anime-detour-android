@@ -42,7 +42,7 @@ public class ScheduleFragment extends BaseFragment
     View loadingIndicator;
 
     @State
-    int position;
+    int position = -1;
 
     private CompositeDisposable disposables;
     private MultiDayPagerAdapter adapter;
@@ -92,7 +92,10 @@ public class ScheduleFragment extends BaseFragment
             logger.debug("Found %s days", days.size());
             emptyView.setVisibility(View.GONE);
             adapter.setDays(days);
-            pager.setCurrentItem(position);
+            if (position != -1) {
+                pager.setCurrentItem(position);
+                position = -1;
+            }
         }
     }
 

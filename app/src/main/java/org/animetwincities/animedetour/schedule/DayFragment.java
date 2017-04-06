@@ -48,7 +48,7 @@ public class DayFragment extends BaseFragment
     View emptyView;
 
     @State
-    int scrollPosition;
+    int scrollPosition = -1;
 
     private CompositeDisposable disposables;
 
@@ -115,7 +115,11 @@ public class DayFragment extends BaseFragment
         adapter.setEvents(events);
 
         logger.debug("Restoring scroll position: %s", scrollPosition);
-        eventList.setSelection(this.scrollPosition);
+
+        if (this.scrollPosition != -1) {
+            eventList.setSelection(this.scrollPosition);
+            scrollPosition = -1;
+        }
     }
 
     public void setFavorites(List<String> events)
