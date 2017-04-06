@@ -23,7 +23,7 @@ class RxResultAdapter<RESULT> implements OnCompleteListener<RESULT>, Disposable
     @Override
     public void onComplete(@NonNull Task<RESULT> task)
     {
-        if (emitter.isDisposed()) {
+        if (null == emitter || emitter.isDisposed()) {
             return;
         }
 

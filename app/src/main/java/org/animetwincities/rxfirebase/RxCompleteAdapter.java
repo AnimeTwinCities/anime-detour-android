@@ -23,7 +23,7 @@ class RxCompleteAdapter implements OnCompleteListener<Void>, Disposable
     @Override
     public void onComplete(@NonNull Task<Void> task)
     {
-        if(emitter.isDisposed()) {
+        if (null == emitter || emitter.isDisposed()) {
             return;
         }
 

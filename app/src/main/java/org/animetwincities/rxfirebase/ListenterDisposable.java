@@ -12,10 +12,8 @@ import io.reactivex.disposables.Disposable;
  */
 public class ListenterDisposable implements Disposable
 {
-    final private ValueEventListener listener;
-    final private Query query;
-
-    private boolean disposed = false;
+    private ValueEventListener listener;
+    private Query query;
 
     public ListenterDisposable(ValueEventListener listener, Query query) {
         this.listener = listener;
@@ -25,11 +23,12 @@ public class ListenterDisposable implements Disposable
     @Override
     public void dispose() {
         query.removeEventListener(listener);
-        disposed = true;
+        query = null;
+        listener = null;
     }
 
     @Override
     public boolean isDisposed() {
-        return disposed;
+        return listener == null;
     }
 }
