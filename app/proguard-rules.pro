@@ -16,16 +16,25 @@
 #   public *;
 #}
 
-## IcePick 3.1.0 ##
+## Local Code ##
+-keepattributes InnerClasses
+-keepclassmembers class org.animetwincities.** {
+    *;
+}
+
+## Ice Pick ##
 -dontwarn icepick.**
--keep class icepick.** { *; }
 -keep class **$$Icepick { *; }
+-keepnames class * { @icepick.State *; }
 -keepclasseswithmembernames class * {
     @icepick.* <fields>;
 }
--keepnames class * { @icepick.State *;}
 
-## Fresco 1.1 ##
+## Stetho ##
+-keep class com.facebook.stetho.** { *; }
+-keepclassmembers class com.facebook.stetho.** { *; }
+
+## Fresco ##
 # Keep our interfaces so they can be used by other ProGuard rules.
 # See http://sourceforge.net/p/proguard/bugs/466/
 -keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
@@ -46,3 +55,6 @@
 -dontwarn okhttp3.**
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
+
+## RetroLambda ##
+-dontwarn java.lang.invoke.*
