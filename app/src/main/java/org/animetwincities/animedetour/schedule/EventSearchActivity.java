@@ -24,6 +24,7 @@ import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 import inkapplicaitons.android.logger.Logger;
 import inkapplications.android.layoutinjector.Layout;
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseActivity;
@@ -74,6 +75,8 @@ public class EventSearchActivity extends BaseActivity
     @Inject
     InputMethodManager inputManager;
 
+    private CompositeDisposable disposables;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -88,6 +91,7 @@ public class EventSearchActivity extends BaseActivity
     protected void onStart()
     {
         super.onStart();
+        disposables = new CompositeDisposable();
         this.searchBar.setIconifiedByDefault(false);
         this.searchBar.requestFocusFromTouch();
         this.results.setAdapter(adapter);
@@ -111,14 +115,15 @@ public class EventSearchActivity extends BaseActivity
             startActivity(EventDetailActivity.createIntent(EventSearchActivity.this, id));
         });
         this.filters.setAdapter(filterAdapter);
-        scheduleRepository.observeEvents()
+        disposables.add(scheduleRepository.observeEvents()
             .flatMap(events -> Observable.fromIterable(events)
                 .map(Event::getCategory)
                 .distinct()
                 .toList()
                 .toObservable()
             )
-            .subscribe(filterAdapter::setItems, error -> logger.error(error, "Problem loading events for categories"));
+            .subscribe(filterAdapter::setItems, error -> logger.error(error, "Problem loading events for categories"))
+        );
 
         OnQueryTextListener queryListener = new OnQueryTextListener() {
             @Override
@@ -130,48 +135,50 @@ public class EventSearchActivity extends BaseActivity
             @Override
             public boolean onQueryTextChange(String newText) {
                 toggleVisibility(newText);
-                scheduleRepository.observeEvents()
-                    .flatMap(eventList -> Observable.fromIterable(eventList)
-                        .filter(event -> {
-                            String query = newText.toLowerCase();
-                            if (event.getName().toLowerCase().contains(query)) {
-                                return true;
-                            }
-                            if (event.getDescription().toLowerCase().contains(query)) {
-                                return true;
-                            }
-                            if (event.getCategory().toLowerCase().contains(query)) {
-                                return true;
-                            }
-                            if (event.getHosts() != null && TextUtils.join(",", event.getHosts()).toLowerCase().contains(query)) {
-                                return true;
-                            }
-                            if (event.getTags() != null && TextUtils.join(",", event.getTags()).toLowerCase().contains(query)) {
-                                return true;
+                disposables.add(
+                    scheduleRepository.observeEvents()
+                        .flatMap(eventList -> Observable.fromIterable(eventList)
+                            .filter(event -> {
+                                String query = newText.toLowerCase();
+                                if (event.getName().toLowerCase().contains(query)) {
+                                    return true;
+                                }
+                                if (event.getDescription().toLowerCase().contains(query)) {
+                                    return true;
+                                }
+                                if (event.getCategory().toLowerCase().contains(query)) {
+                                    return true;
+                                }
+                                if (event.getHosts() != null && TextUtils.join(",", event.getHosts()).toLowerCase().contains(query)) {
+                                    return true;
+                                }
+                                if (event.getTags() != null && TextUtils.join(",", event.getTags()).toLowerCase().contains(query)) {
+                                    return true;
+                                }
+
+                                return false;
+                            })
+                            .toList()
+                            .toObservable())
+                        .subscribe(events -> {
+                            adapter.setEvents(events);
+
+                            if (events.isEmpty()) {
+                                emptyView.setVisibility(View.VISIBLE);
+                                filters.setVisibility(View.GONE);
+                                results.setVisibility(View.GONE);
+                            } else if (newText.isEmpty()) {
+                                emptyView.setVisibility(View.GONE);
+                                filters.setVisibility(View.VISIBLE);
+                                results.setVisibility(View.GONE);
+                            } else {
+                                emptyView.setVisibility(View.GONE);
+                                filters.setVisibility(View.GONE);
+                                results.setVisibility(View.VISIBLE);
                             }
 
-                            return false;
-                        })
-                        .toList()
-                        .toObservable())
-                    .subscribe(events -> {
-                        adapter.setEvents(events);
-
-                        if (events.isEmpty()) {
-                            emptyView.setVisibility(View.VISIBLE);
-                            filters.setVisibility(View.GONE);
-                            results.setVisibility(View.GONE);
-                        } else if (newText.isEmpty()) {
-                            emptyView.setVisibility(View.GONE);
-                            filters.setVisibility(View.VISIBLE);
-                            results.setVisibility(View.GONE);
-                        } else {
-                            emptyView.setVisibility(View.GONE);
-                            filters.setVisibility(View.GONE);
-                            results.setVisibility(View.VISIBLE);
-                        }
-
-                    }, error -> logger.error(error, "Problem observing events for search"));
+                        }, error -> logger.error(error, "Problem observing events for search"))
+                );
 
                 return true;
             }
@@ -209,6 +216,12 @@ public class EventSearchActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        disposables.dispose();
     }
 
     @Override
