@@ -1,19 +1,18 @@
 package org.animetwincities.animedetour;
 
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.animetwincities.animedetour.framework.BaseActivity;
@@ -34,6 +33,8 @@ import org.animetwincities.animedetour.settings.SettingsFragment;
 @Layout(R.layout.fragment_container)
 public class MainActivity extends BaseActivity
 {
+    final private static String MAIN_FRAGMENT_TAG = "main_fragment";
+
     @Inject
     Logger logger;
 
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity
     {
         this.logger.trace("Showing Schedule");
         ScheduleFragment scheduleFragment = new ScheduleFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, scheduleFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, scheduleFragment, MAIN_FRAGMENT_TAG).commit();
 
         return false;
     }
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity
         this.logger.trace("Showing Guest List");
 
         GuestIndexFragment fragment = new GuestIndexFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment, MAIN_FRAGMENT_TAG).commit();
 
         return false;
     }
@@ -92,7 +93,7 @@ public class MainActivity extends BaseActivity
     {
         this.logger.trace("Showing User Favorites");
         FavoritesFragment fragment = new FavoritesFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment, MAIN_FRAGMENT_TAG).commit();
         return false;
     }
 
@@ -102,7 +103,7 @@ public class MainActivity extends BaseActivity
         this.logger.trace("Showing Map");
 
         HotelMapFragment fragment = new HotelMapFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment, MAIN_FRAGMENT_TAG).commit();
         return false;
     }
 
@@ -111,8 +112,17 @@ public class MainActivity extends BaseActivity
     {
         this.logger.trace("Showing Settings Page");
         SettingsFragment fragment = new SettingsFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment, MAIN_FRAGMENT_TAG).commit();
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG) instanceof ScheduleFragment) {
+            super.onBackPressed();
+        } else {
+            showSchedule(null, 0, null);
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ import java.util.List;
  * Shows a pager with each fragment representing one day of the schedule.
  */
 @Layout(R.layout.schedule)
-public class ScheduleFragment extends BaseFragment
+final public class ScheduleFragment extends BaseFragment
 {
     @Inject
     ScheduleRepository scheduleRepository;
