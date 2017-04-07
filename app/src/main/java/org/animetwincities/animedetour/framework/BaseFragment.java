@@ -44,6 +44,7 @@ abstract public class BaseFragment extends Fragment implements DaggerActivityCom
         ButterKnife.bind(this, getView());
 
         logger.debug("Fragment onActivityCreated took %s", timer.stop());
+        this.setHasOptionsMenu(true);
     }
 
     @Nullable

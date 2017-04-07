@@ -10,7 +10,7 @@
 
     <android.support.v7.widget.Toolbar
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MaterialTheme.Light.ActionBar"
             android:id="@+id/fragment_container_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
