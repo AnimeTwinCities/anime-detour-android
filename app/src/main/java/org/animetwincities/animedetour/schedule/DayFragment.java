@@ -123,6 +123,12 @@ public class DayFragment extends BaseFragment
                     .toList()
                     .toObservable()
                 )
+                .flatMap(events -> {
+                    if (events.isEmpty()) {
+                        return scheduleRepository.observeEventsOnDay(day);
+                    }
+                    return Observable.just(events);
+                })
                 .subscribe(this::setEvents, this::loadError);
         } else {
             eventDisposable = scheduleRepository.observeEventsOnDay(day).subscribe(this::setEvents, this::loadError);
