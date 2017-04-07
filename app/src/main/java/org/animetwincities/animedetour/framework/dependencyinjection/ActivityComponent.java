@@ -10,6 +10,7 @@ import org.animetwincities.animedetour.guest.GuestDetailFragment;
 import org.animetwincities.animedetour.guest.GuestIndexFragment;
 import org.animetwincities.animedetour.schedule.DayFragment;
 import org.animetwincities.animedetour.schedule.EventDetailActivity;
+import org.animetwincities.animedetour.schedule.EventSearchActivity;
 import org.animetwincities.animedetour.schedule.FavoritesFragment;
 import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
@@ -44,6 +45,7 @@ public interface ActivityComponent
     void inject(SplashActivity target);
     void inject(GuestDetailActivity target);
     void inject(EventDetailActivity target);
+    void inject(EventSearchActivity target);
 
     void inject(ScheduleFragment target);
     void inject(GuestIndexFragment target);

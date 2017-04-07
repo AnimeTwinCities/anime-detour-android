@@ -1,7 +1,9 @@
 package org.animetwincities.animedetour.schedule;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -9,13 +11,16 @@ import butterknife.BindView;
 import com.inkapplications.logger.RxLogger;
 import icepick.State;
 import inkapplications.android.layoutinjector.Layout;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import org.animetwincities.animedetour.R;
 import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.auth.User;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -35,6 +40,9 @@ public class DayFragment extends BaseFragment
     @Inject
     EventListAdapter adapter;
 
+    @Inject
+    AppConfig config;
+
     @State
     LocalDate day;
 
@@ -51,6 +59,7 @@ public class DayFragment extends BaseFragment
     int scrollPosition = -1;
 
     private CompositeDisposable disposables;
+    private Disposable eventDisposable;
 
     public DayFragment() {}
 
@@ -68,9 +77,56 @@ public class DayFragment extends BaseFragment
         eventList.setOnItemClickListener(this::openEvent);
 
         disposables = new CompositeDisposable();
-        disposables.addAll(
-            scheduleRepository.observeEventsOnDay(day).subscribe(this::setEvents, this::loadError)
-        );
+        reloadEvents();
+
+        this.setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.event_actions, menu);
+        menu.findItem(R.id.event_actions_show_past).setChecked(config.showPastEvents());
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.event_actions_search:
+                this.startActivity(new Intent(getActivity(), EventSearchActivity.class));
+                return true;
+            case R.id.event_actions_show_past:
+                boolean currentValue = config.showPastEvents();
+                boolean newValue = !currentValue;
+                config.setShowPastEvents(newValue);
+                item.setChecked(newValue);
+                reloadEvents();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void reloadEvents()
+    {
+        if (eventDisposable != null) {
+            eventDisposable.dispose();
+        }
+
+        if (config.showPastEvents() == false) {
+            eventDisposable = scheduleRepository.observeEventsOnDay(day)
+                .flatMap(events -> Observable.fromIterable(events)
+                    .filter(event -> !event.getEnd().isBefore(LocalDateTime.now()))
+                    .toList()
+                    .toObservable()
+                )
+                .subscribe(this::setEvents, this::loadError);
+        } else {
+            eventDisposable = scheduleRepository.observeEventsOnDay(day).subscribe(this::setEvents, this::loadError);
+        }
     }
 
     private void openEvent(AdapterView<?> adapterView, View view, int i, long l)

@@ -107,6 +107,7 @@ public class EventDetailActivity extends BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        logger.info("Showing Details for Event %s", getEventId());
 
         toolbar.setTitle("");
         this.setSupportActionBar(toolbar);

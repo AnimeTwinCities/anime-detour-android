@@ -138,10 +138,18 @@ public class AppConfig
     }
 
     public boolean receiveEventNotifications() {
-        return this.sharedPreferences.getBoolean("event_notifications_" + getSchedule(), true);
+        return this.sharedPreferences.getBoolean("event_notifications", true);
     }
 
     public void setEventNotifications(boolean enabled) {
-        this.sharedPreferences.edit().putBoolean("event_notifications_" + getSchedule(), enabled).apply();
+        this.sharedPreferences.edit().putBoolean("event_notifications", enabled).apply();
+    }
+
+    public boolean showPastEvents() {
+        return this.sharedPreferences.getBoolean("event_show_past", false);
+    }
+
+    public void setShowPastEvents(boolean value) {
+        this.sharedPreferences.edit().putBoolean("event_show_past", value).apply();
     }
 }

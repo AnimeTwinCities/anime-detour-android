@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.view.inputmethod.InputMethodManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -112,6 +113,13 @@ public class AndroidApplicationModule {
     public PackageManager packageManager()
     {
         return this.application.getPackageManager();
+    }
+
+    @Provides
+    @Singleton
+    public InputMethodManager inputMethodManager(Application context)
+    {
+        return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     /**

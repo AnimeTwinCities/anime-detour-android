@@ -27,6 +27,9 @@
             android:theme="@style/AppTheme.Translucent"/>
         <activity android:name=".schedule.EventDetailActivity"
             android:theme="@style/AppTheme.Translucent"/>
+        <activity android:name=".schedule.EventSearchActivity"
+                  android:windowSoftInputMode="adjustResize"
+                  android:theme="@style/AppTheme"/>
         <activity android:name=".MainActivity" />
 
         <receiver android:name=".schedule.notification.UpcomingEventReciever" />

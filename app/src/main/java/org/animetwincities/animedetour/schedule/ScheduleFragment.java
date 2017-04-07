@@ -9,7 +9,6 @@ import icepick.State;
 import inkapplications.android.layoutinjector.Layout;
 import io.reactivex.disposables.CompositeDisposable;
 import org.animetwincities.animedetour.R;
-import org.animetwincities.animedetour.framework.AppConfig;
 import org.animetwincities.animedetour.framework.BaseFragment;
 import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
 import org.threeten.bp.LocalDate;

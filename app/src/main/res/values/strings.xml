@@ -18,5 +18,10 @@
     <string name="notification_description">Event is starting soon</string>
     <string name="settings_application_version">Application version %1$s build %2$s</string>
     <string name="settings_event_notifications">Event Notifications</string>
-    <string name="legal">Copyright © 2014-2015 Anime Twin Cities, Inc. \nAll Rights Reserved. \n\n"Material Design Icons" copyright Google Inc. Licensed under Creative Commons Attribution 4.0</string>
+    <string name="legal">Copyright © 2014-2017 Anime Twin Cities, Inc. \nAll Rights Reserved. \n\n"Material Design Icons" copyright Google Inc. Licensed under Creative Commons Attribution 4.0</string>
+    <string name="action_show_past">Show Past events</string>
+    <string name="action_search">Search</string>
+    <string name="event_search_no_results">No Results</string>
+    <string name="event_search_no_results_description">Try a different search
+    </string>
 </resources>
