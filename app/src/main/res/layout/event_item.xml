@@ -94,6 +94,19 @@
                     android:maxLines="1"
                     tools:text="Fri 1:00am - Sun 4:00pm in Room B"
             />
+            <TextView
+                    android:id="@+id/event_row_cancelled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/event_row_badge_container"
+                    android:text="@string/event_row_cancelled"
+                    android:visibility="gone"
+                    tools:layout_below="@id/event_row_description"
+                    tools:visibility="visible"
+                    android:textAllCaps="true"
+                    android:textColor="@color/danger"
+                    android:textStyle="bold"
+            />
         </RelativeLayout>
     </LinearLayout>
 

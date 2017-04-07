@@ -24,4 +24,5 @@
     <string name="event_search_no_results">No Results</string>
     <string name="event_search_no_results_description">Try a different search
     </string>
+    <string name="event_row_cancelled">Cancelled</string>
 </resources>

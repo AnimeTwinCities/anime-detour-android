@@ -56,6 +56,8 @@ public class EventRowView extends RelativeLayout
      */
     private View color;
 
+    private View cancelled;
+
     public EventRowView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -92,6 +94,7 @@ public class EventRowView extends RelativeLayout
         this.color = this.findViewById(R.id.event_row_color_label);
         this.ageWarning = (TextView) this.findViewById(R.id.event_row_age_warning);
         this.hoh = this.findViewById(R.id.event_row_hoh);
+        this.cancelled = this.findViewById(R.id.event_row_cancelled);
     }
 
     /**
@@ -157,6 +160,14 @@ public class EventRowView extends RelativeLayout
             this.hoh.setVisibility(VISIBLE);
         } else {
             this.hoh.setVisibility(GONE);
+        }
+
+        if (event.hasTag("cancelled")) {
+            this.description.setVisibility(GONE);
+            this.cancelled.setVisibility(VISIBLE);
+        } else {
+            this.description.setVisibility(VISIBLE);
+            this.cancelled.setVisibility(GONE);
         }
     }
 
