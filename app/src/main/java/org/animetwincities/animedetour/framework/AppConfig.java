@@ -113,7 +113,7 @@ public class AppConfig
      */
     public Completable update()
     {
-        Task<Void> updateTask = remoteConfig.fetch();
+        Task<Void> updateTask = remoteConfig.fetch(14400L);
 
         return FirebaseObservables.fromVoidTask(updateTask)
             .subscribeOn(Schedulers.io())
