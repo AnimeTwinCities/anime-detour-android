@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import icepick.State;
 import prism.framework.Layout;
 import rx.Subscription;
@@ -55,13 +55,13 @@ final public class DayFragment extends BaseFragment
     @Inject
     PreferenceManager preferences;
 
-    @Bind(R.id.panel_list)
+    @BindView(R.id.panel_list)
     ListView panelList;
 
-    @Bind(R.id.panel_empty_view)
+    @BindView(R.id.panel_empty_view)
     View panelEmptyView;
 
-    @Bind(R.id.events_loading_indicator)
+    @BindView(R.id.events_loading_indicator)
     ProgressBar loadingIndicator;
 
     @State

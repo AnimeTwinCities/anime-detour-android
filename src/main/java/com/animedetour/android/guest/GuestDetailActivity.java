@@ -17,7 +17,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.*;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.view.fader.ToolbarFader;
@@ -45,19 +45,19 @@ import javax.inject.Inject;
 @LogName("Guest Detail")
 final public class GuestDetailActivity extends BaseActivity
 {
-    @Bind(R.id.guest_avatar)
+    @BindView(R.id.guest_avatar)
     ImageScrim avatar;
 
-    @Bind(R.id.guest_bio)
+    @BindView(R.id.guest_bio)
     TextView bio;
 
-    @Bind(R.id.guest_category)
+    @BindView(R.id.guest_category)
     TextView category;
 
-    @Bind(R.id.guest_action_bar)
+    @BindView(R.id.guest_action_bar)
     Toolbar actionBar;
 
-    @Bind(R.id.guest_scroll)
+    @BindView(R.id.guest_scroll)
     ScrollView detailsContainer;
 
     @Inject

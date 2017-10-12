@@ -11,7 +11,6 @@ package com.animedetour.android.schedule.favorite;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.BaseFragment;
@@ -20,6 +19,8 @@ import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+
+import butterknife.BindView;
 import icepick.State;
 import monolog.LogName;
 import monolog.Monolog;
@@ -48,16 +49,16 @@ final public class FavoritesFragment extends BaseFragment
     @Inject
     Monolog logger;
 
-    @Bind(R.id.panel_list)
+    @BindView(R.id.panel_list)
     ListView panelList;
 
     @State
     int scrollPosition = 0;
 
-    @Bind(R.id.panel_empty_view)
+    @BindView(R.id.panel_empty_view)
     View panelEmptyView;
 
-    @Bind(R.id.events_loading_indicator)
+    @BindView(R.id.events_loading_indicator)
     View loadingIndicator;
 
     @Inject

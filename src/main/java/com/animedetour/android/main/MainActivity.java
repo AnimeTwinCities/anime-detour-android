@@ -29,7 +29,7 @@ import com.animedetour.android.settings.SettingsFragment;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import icepick.State;
 import org.joda.time.DateTime;
@@ -57,13 +57,13 @@ final public class MainActivity extends BaseActivity
     /**
      * View of the main sliding left drawer
      */
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @Bind(R.id.main_action_bar)
+    @BindView(R.id.main_action_bar)
     Toolbar actionBar;
 
-    @Bind(R.id.drawer_favorites)
+    @BindView(R.id.drawer_favorites)
     View favoritesOption;
 
     @Inject

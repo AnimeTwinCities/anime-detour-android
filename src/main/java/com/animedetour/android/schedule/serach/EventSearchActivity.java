@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.type.EventTypeRepository;
 import com.animedetour.android.framework.BaseActivity;
@@ -24,6 +23,8 @@ import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.inkapplications.android.widget.listview.ItemAdapter;
+
+import butterknife.BindView;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.Layout;
@@ -44,19 +45,19 @@ import javax.inject.Inject;
 @Layout(R.layout.event_search)
 final public class EventSearchActivity extends BaseActivity
 {
-    @Bind(R.id.event_search_action_bar)
+    @BindView(R.id.event_search_action_bar)
     Toolbar actionBar;
 
-    @Bind(R.id.event_search_bar)
+    @BindView(R.id.event_search_bar)
     SearchView searchBar;
 
-    @Bind(R.id.event_search_results)
+    @BindView(R.id.event_search_results)
     ListView results;
 
-    @Bind(R.id.event_search_filters)
+    @BindView(R.id.event_search_filters)
     ListView filters;
 
-    @Bind(R.id.search_empty_view)
+    @BindView(R.id.search_empty_view)
     View emptyView;
 
     @Inject

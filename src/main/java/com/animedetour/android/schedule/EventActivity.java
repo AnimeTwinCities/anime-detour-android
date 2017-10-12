@@ -16,7 +16,8 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
@@ -64,43 +65,43 @@ final public class EventActivity extends BaseActivity
     /**
      * View for the top banner on the page that can display an image & title.
      */
-    @Bind(R.id.event_banner)
+    @BindView(R.id.event_banner)
     ImageScrim bannerView;
 
     /**
      * Main content section of the event.
      */
-    @Bind(R.id.event_text)
+    @BindView(R.id.event_text)
     TextView descriptionView;
 
-    @Bind(R.id.event_speakers)
+    @BindView(R.id.event_speakers)
     TextView speakers;
 
-    @Bind(R.id.event_type)
+    @BindView(R.id.event_type)
     TextView eventType;
 
-    @Bind(R.id.event_type_container)
+    @BindView(R.id.event_type_container)
     View eventTypeContainer;
 
-    @Bind(R.id.event_details)
+    @BindView(R.id.event_details)
     TextView eventDetails;
 
-    @Bind(R.id.event_action_bar)
+    @BindView(R.id.event_action_bar)
     Toolbar actionBar;
 
-    @Bind(R.id.event_add)
+    @BindView(R.id.event_add)
     StarFloatingActionButton addButton;
 
-    @Bind(R.id.event_container)
+    @BindView(R.id.event_container)
     ScrollView detailsContainer;
 
-    @Bind(R.id.event_age_warning)
+    @BindView(R.id.event_age_warning)
     TextView ageWarning;
 
-    @Bind(R.id.event_hoh_message)
+    @BindView(R.id.event_hoh_message)
     View hohMessage;
 
-    @Bind(R.id.event_tags)
+    @BindView(R.id.event_tags)
     FlowLayout tags;
 
     @Inject

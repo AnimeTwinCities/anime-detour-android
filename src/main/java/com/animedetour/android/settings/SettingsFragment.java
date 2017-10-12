@@ -12,7 +12,8 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
@@ -49,16 +50,16 @@ final public class SettingsFragment extends BaseFragment
     /**
      * Settings that should only be displayed to developers.
      */
-    @Bind({R.id.settings_event_generate, R.id.settings_drop_data, R.id.settings_fake_slowdown})
+    @BindViews({R.id.settings_event_generate, R.id.settings_drop_data, R.id.settings_fake_slowdown})
     View[] developerViews;
 
-    @Bind(R.id.settings_event_notification_switch)
+    @BindView(R.id.settings_event_notification_switch)
     Switch eventNotifications;
 
-    @Bind(R.id.settings_fake_slowdown_switch)
+    @BindView(R.id.settings_fake_slowdown_switch)
     Switch fakeSlowdown;
 
-    @Bind(R.id.settings_version_label)
+    @BindView(R.id.settings_version_label)
     TextView versionLabel;
 
     @Inject

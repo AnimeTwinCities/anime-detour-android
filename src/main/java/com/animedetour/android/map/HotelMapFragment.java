@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.animedetour.android.R;
@@ -44,16 +44,16 @@ import static com.animedetour.android.map.HotelMapPoints.SHERATON_CENTER;
 @LogName("Map")
 final public class HotelMapFragment extends SupportMapFragment implements OnMapReadyCallback
 {
-    @Bind(R.id.map_control_first_floor)
+    @BindView(R.id.map_control_first_floor)
     Button switchFirstFloor;
 
-    @Bind(R.id.map_control_second_floor)
+    @BindView(R.id.map_control_second_floor)
     Button switchSecondFloor;
 
-    @Bind(R.id.map_control_22nd_floor)
+    @BindView(R.id.map_control_22nd_floor)
     Button switch22ndFloor;
 
-    @Bind(R.id.map_control_sheraton)
+    @BindView(R.id.map_control_sheraton)
     Button switchSheraton;
 
     @Inject

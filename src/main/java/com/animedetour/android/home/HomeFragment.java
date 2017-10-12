@@ -8,12 +8,13 @@
  */
 package com.animedetour.android.home;
 
-import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+
+import butterknife.BindView;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
@@ -41,10 +42,10 @@ final public class HomeFragment extends BaseFragment
     @Inject
     Monolog logger;
 
-    @Bind(R.id.event_banner)
+    @BindView(R.id.event_banner)
     ImageScrim scrim;
 
-    @Bind(R.id.event_banner2)
+    @BindView(R.id.event_banner2)
     ImageScrim scrim2;
 
     @Inject

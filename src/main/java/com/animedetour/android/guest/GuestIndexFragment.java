@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
@@ -43,10 +43,10 @@ public class GuestIndexFragment extends BaseFragment
     @Inject
     GuestRepository repository;
 
-    @Bind(R.id.guest_category_index)
+    @BindView(R.id.guest_category_index)
     SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
 
-    @Bind(R.id.guest_category_empty_view)
+    @BindView(R.id.guest_category_empty_view)
     View emptyView;
 
     @Inject

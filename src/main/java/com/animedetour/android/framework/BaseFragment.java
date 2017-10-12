@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.squareup.otto.Bus;
+
+import butterknife.Unbinder;
 import icepick.Icepick;
 import monolog.Monolog;
 import prism.framework.Layout;
@@ -33,9 +35,11 @@ public class BaseFragment extends android.support.v4.app.Fragment
 {
     @Inject
     Monolog logger;
-
     @Inject
     Bus applicationBus;
+
+    private Unbinder unbinder;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
@@ -43,7 +47,7 @@ public class BaseFragment extends android.support.v4.app.Fragment
         super.onActivityCreated(savedInstanceState);
 
         PrismFacade.bootstrap(this);
-        ButterKnife.bind(this, this.getView());
+        this.unbinder = ButterKnife.bind(this, this.getView());
         this.logger.trace(this);
     }
 
@@ -93,6 +97,6 @@ public class BaseFragment extends android.support.v4.app.Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

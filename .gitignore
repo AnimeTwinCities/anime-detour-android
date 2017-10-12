@@ -2,9 +2,13 @@
 local.properties
 
 # Gradle
-/.gradle/
-/build/
-/gradle.properties
+build/
+.gradle/
+gradle.properties
 
 # Signing Keys
 *.keystore
+
+# Android Studio
+*.iml
+.idea/

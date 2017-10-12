@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import monolog.LogName;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
@@ -46,7 +46,7 @@ import prism.framework.Layout;
 @Layout(R.layout.schedule_pager)
 final public class ScheduleFragment extends BaseFragment
 {
-    @Bind(R.id.event_days)
+    @BindView(R.id.event_days)
     ViewPager pager;
 
     @Inject
