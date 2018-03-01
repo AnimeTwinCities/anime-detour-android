@@ -52,8 +52,17 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     @BindView(R.id.map_control_second_floor)
     Button switchSecondFloor;
 
-    @BindView(R.id.map_control_22nd_floor)
-    Button switch22ndFloor;
+    @BindView(R.id.map_control_third_floor)
+    Button switchThirdFloor;
+
+    @BindView(R.id.map_control_fourth_floor)
+    Button switchFourthFloor;
+
+    @BindView(R.id.map_control_fifth_floor)
+    Button switchFifthFloor;
+
+    @BindView(R.id.map_control_sixth_floor)
+    Button switchSixthFloor;
 
     @BindView(R.id.map_missing_services_view)
     LinearLayout missingGooglePlayServicesLayout;
@@ -168,7 +177,10 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
 
         this.switchFirstFloor.setEnabled(true);
         this.switchSecondFloor.setEnabled(true);
-        this.switch22ndFloor.setEnabled(true);
+        this.switchThirdFloor.setEnabled(true);
+        this.switchFourthFloor.setEnabled(true);
+        this.switchFifthFloor.setEnabled(true);
+        this.switchSixthFloor.setEnabled(true);
     }
 
     /**
@@ -204,10 +216,10 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     }
 
     /**
-     * Clear the map and draw the 22nd floor map.
+     * Clear the map and draw the 3rd floor map.
      */
-    @OnClick(R.id.map_control_22nd_floor)
-    public void show22ndFloor()
+    @OnClick(R.id.map_control_third_floor)
+    public void showThirdFloor()
     {
         if (null == map) {
             return;
@@ -215,8 +227,56 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
 
         this.resetMap(map);
         this.centerMap(map, HOTEL_CENTER, true);
-        this.switch22ndFloor.setEnabled(false);
-        map.addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
+        this.switchThirdFloor.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getThirdFloorOverlay());
+    }
+
+    /**
+     * Clear the map and draw the 4th floor map.
+     */
+    @OnClick(R.id.map_control_fourth_floor)
+    public void showFourthFloor()
+    {
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
+        this.switchFourthFloor.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getFourthFloorOverlay());
+    }
+
+    /**
+     * Clear the map and draw the 5th floor map.
+     */
+    @OnClick(R.id.map_control_fifth_floor)
+    public void showFifthFloor()
+    {
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
+        this.switchFifthFloor.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getFifthFloorOverlay());
+    }
+
+    /**
+     * Clear the map and draw the 6th floor map.
+     */
+    @OnClick(R.id.map_control_sixth_floor)
+    public void showSixthFloor()
+    {
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
+        this.switchSixthFloor.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getSixthFloorOverlay());
     }
 
     @OnClick(R.id.get_services_button)

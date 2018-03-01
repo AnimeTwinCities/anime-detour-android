@@ -5,7 +5,7 @@ android {
     def specifiedVersionName = project.hasProperty("versionName") ? project.getProperty("versionName") as String : "3.1"
 
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "org.animetwincities.animedetour"
         targetSdkVersion 25
