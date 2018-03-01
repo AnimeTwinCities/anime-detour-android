@@ -28,7 +28,9 @@ final class HotelMapPoints
     /**
      * Center point of the hotel to base overlay images on and to focus the map on.
      */
-    final public static LatLng HOTEL_CENTER = new LatLng(44.970883, -93.278163);
+    final public static LatLng HOTEL_CENTER = new LatLng(44.970704, -93.278351);
+    //final public static LatLng HOTEL_CENTER = new LatLng(44.970497, -93.278317);
+    //final public static LatLng HOTEL_CENTER = new LatLng(44.970543, -93.278332);
 
     /**
      * Positioning options for the first floor map image to overlay on the map.
@@ -38,7 +40,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_1));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
@@ -52,7 +54,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_2));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
@@ -65,7 +67,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_3));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
@@ -78,7 +80,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_4));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
@@ -91,7 +93,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_5));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
@@ -104,7 +106,7 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_6));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }

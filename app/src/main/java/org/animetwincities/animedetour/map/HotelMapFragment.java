@@ -152,7 +152,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     private void centerMap(GoogleMap map, LatLng location, boolean animate)
     {
         CameraUpdate camera = CameraUpdateFactory.newCameraPosition(
-            new CameraPosition.Builder().target(location).zoom(18F).tilt(0).bearing(180).build()
+            new CameraPosition.Builder().target(location).zoom(18F).tilt(0).bearing(300).build()
         );
 
         if (animate) {
