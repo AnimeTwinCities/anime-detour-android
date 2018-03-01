@@ -10,9 +10,12 @@
     <string name="event_time_format">hh:mma</string>
     <string name="event_age_warning">Parts of this event may be restricted to %s \nYou may be required to show your ID before entering.</string>
 
-    <string name="map_control_first_floor">1</string>
-    <string name="map_control_second_floor">2</string>
-    <string name="map_control_22nd_floor">22</string>
+    <string name="map_control_first_floor">1F</string>
+    <string name="map_control_second_floor">2F</string>
+    <string name="map_control_third_floor">3F</string>
+    <string name="map_control_fourth_floor">4F</string>
+    <string name="map_control_fifth_floor">5F</string>
+    <string name="map_control_sixth_floor">6F</string>
     <string name="missing_google_play_services_error_message">Oh no! We can\'t show you this map, since you don\'t have Google Play Services!</string>
     <string name="google_play_services_button_label">Get Google Play Services</string>
     <string name="notification_description">Event is starting soon</string>

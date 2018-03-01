@@ -23,14 +23,41 @@
         android:text="@string/map_control_second_floor"
     />
     <Button
-        android:id="@+id/map_control_22nd_floor"
+        android:id="@+id/map_control_third_floor"
         android:layout_width="48sp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/map_control_second_floor"
-        android:text="@string/map_control_22nd_floor"
-    />
+        android:text="@string/map_control_third_floor"
+        />
+    <Button
+        android:id="@+id/map_control_fourth_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_third_floor"
+        android:text="@string/map_control_fourth_floor"
+        />
+    <Button
+        android:id="@+id/map_control_fifth_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_fourth_floor"
+        android:text="@string/map_control_fifth_floor"
+        />
+    <Button
+        android:id="@+id/map_control_sixth_floor"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/map_control_fifth_floor"
+        android:text="@string/map_control_sixth_floor"
+        />
 
     <LinearLayout
         android:id="@+id/map_missing_services_view"

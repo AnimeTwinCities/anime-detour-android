@@ -28,13 +28,9 @@ final class HotelMapPoints
     /**
      * Center point of the hotel to base overlay images on and to focus the map on.
      */
-    final public static LatLng HOTEL_CENTER = new LatLng(44.8619752, -93.3530438);
-
-    /**
-     * Center point of the Sheraton overflow hotel to base overlay images and
-     * to focus the map on for those floors.
-     */
-    final public static LatLng SHERATON_CENTER = new LatLng(44.860440, -93.354369);
+    final public static LatLng HOTEL_CENTER = new LatLng(44.970704, -93.278351);
+    //final public static LatLng HOTEL_CENTER = new LatLng(44.970497, -93.278317);
+    //final public static LatLng HOTEL_CENTER = new LatLng(44.970543, -93.278332);
 
     /**
      * Positioning options for the first floor map image to overlay on the map.
@@ -44,10 +40,11 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_1));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
+
 
     /**
      * Positioning options for the second floor map image to overlay on the map.
@@ -57,20 +54,59 @@ final class HotelMapPoints
         GroundOverlayOptions options = new GroundOverlayOptions();
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_2));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
 
         return options;
     }
 
     /**
-     * Positioning options for the 22nd floor map image to overlay on the map.
+     * Positioning options for the 3rd floor map image to overlay on the map.
      */
-    public static GroundOverlayOptions get22ndFloorOverlay()
+    public static GroundOverlayOptions getThirdFloorOverlay()
     {
         GroundOverlayOptions options = new GroundOverlayOptions();
-        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_22));
+        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_3));
         options.position(HOTEL_CENTER, 160);
-        options.bearing(180);
+        options.bearing(300);
+
+        return options;
+    }
+
+    /**
+     * Positioning options for the 4th floor map image to overlay on the map.
+     */
+    public static GroundOverlayOptions getFourthFloorOverlay()
+    {
+        GroundOverlayOptions options = new GroundOverlayOptions();
+        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_4));
+        options.position(HOTEL_CENTER, 160);
+        options.bearing(300);
+
+        return options;
+    }
+
+    /**
+     * Positioning options for the 5th floor map image to overlsay on the map.
+     */
+    public static GroundOverlayOptions getFifthFloorOverlay()
+    {
+        GroundOverlayOptions options = new GroundOverlayOptions();
+        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_5));
+        options.position(HOTEL_CENTER, 160);
+        options.bearing(300);
+
+        return options;
+    }
+
+    /**
+     * Positioning options for the 6th floor map image to overlay on the map.
+     */
+    public static GroundOverlayOptions getSixthFloorOverlay()
+    {
+        GroundOverlayOptions options = new GroundOverlayOptions();
+        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_6));
+        options.position(HOTEL_CENTER, 160);
+        options.bearing(300);
 
         return options;
     }
