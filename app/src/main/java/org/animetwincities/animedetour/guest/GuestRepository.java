@@ -74,7 +74,9 @@ public class GuestRepository
             .take(1)
             .flatMapCompletable(guests -> Observable.fromIterable(guests)
                 .map(Guest::getImage)
-                .flatMapCompletable(url -> FrescoObservables.prefetch(pipeline, url)))
+                .flatMapCompletable(url -> FrescoObservables.prefetch(pipeline, url)
+                    .doOnError(error -> logger.error(error, "Problem Fetching Image"))
+                    .onErrorComplete()))
             .observeOn(AndroidSchedulers.mainThread());
     }
 
