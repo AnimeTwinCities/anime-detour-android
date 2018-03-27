@@ -1,24 +1,24 @@
 package org.animetwincities.animedetour.framework;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import inkapplicaitons.android.logger.Logger;
-import io.reactivex.Completable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import org.animetwincities.animedetour.R;
-import org.animetwincities.rxfirebase.FirebaseObservables;
+import android.content.*;
+import android.graphics.*;
+import android.support.annotation.*;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import com.google.android.gms.tasks.*;
+import com.google.firebase.remoteconfig.*;
+
+import org.animetwincities.animedetour.R;
+import org.animetwincities.rxfirebase.*;
+
+import java.util.*;
+import java.util.concurrent.*;
+
+import javax.inject.*;
+
+import inkapplicaitons.android.logger.*;
+import io.reactivex.*;
+import io.reactivex.android.schedulers.*;
+import io.reactivex.schedulers.*;
 
 /**
  * Application Configuration settings.
@@ -132,7 +132,7 @@ public class AppConfig
     {
         HashMap<String, Object> defaults = new HashMap<>();
 
-        defaults.put(YEAR, "ad-2017");
+        defaults.put(YEAR, "ad-2018");
 
         return defaults;
     }

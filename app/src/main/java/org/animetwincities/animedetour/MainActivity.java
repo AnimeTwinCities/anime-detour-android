@@ -1,34 +1,26 @@
 package org.animetwincities.animedetour;
 
-import android.graphics.PointF;
-import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.os.*;
+import android.support.annotation.*;
+import android.support.v7.widget.*;
+import android.view.*;
 
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.*;
+import com.mikepenz.materialdrawer.model.*;
+import com.mikepenz.materialdrawer.model.interfaces.*;
 
-import org.animetwincities.animedetour.framework.BaseActivity;
-import org.animetwincities.animedetour.framework.Transitions;
-import org.animetwincities.animedetour.framework.dependencyinjection.ActivityComponent;
-import org.animetwincities.animedetour.guest.GuestIndexFragment;
-import org.animetwincities.animedetour.map.HotelMapFragment;
-import org.animetwincities.animedetour.schedule.FavoritesFragment;
-import org.animetwincities.animedetour.schedule.ScheduleFragment;
+import org.animetwincities.animedetour.framework.*;
+import org.animetwincities.animedetour.framework.dependencyinjection.*;
+import org.animetwincities.animedetour.guest.*;
+import org.animetwincities.animedetour.map.*;
+import org.animetwincities.animedetour.schedule.*;
+import org.animetwincities.animedetour.settings.*;
 
-import javax.inject.Inject;
+import javax.inject.*;
 
-import butterknife.BindView;
-import inkapplicaitons.android.logger.Logger;
-import inkapplications.android.layoutinjector.Layout;
-import org.animetwincities.animedetour.settings.SettingsFragment;
+import butterknife.*;
+import inkapplicaitons.android.logger.*;
+import inkapplications.android.layoutinjector.*;
 
 @Layout(R.layout.fragment_container)
 public class MainActivity extends BaseActivity
@@ -146,7 +138,7 @@ public class MainActivity extends BaseActivity
             .withAccountHeader(
                 new AccountHeaderBuilder()
                     .withActivity(this)
-                    .withHeaderBackground(R.drawable.banner)
+                    .withHeaderBackground(R.drawable.ic_banner_2018)
                     .build()
             )
             .build();
