@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    def specifiedVersionCode = project.hasProperty("versionCode") ? project.getProperty("versionCode") as Integer : 3000
+    def specifiedVersionCode = project.hasProperty("versionCode") ? project.getProperty("versionCode") as Integer : 3013
     def specifiedVersionName = project.hasProperty("versionName") ? project.getProperty("versionName") as String : "3.1"
 
     compileSdkVersion 25
@@ -12,6 +12,11 @@ android {
         versionCode specifiedVersionCode
         versionName specifiedVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    android {
+        lintOptions {
+            abortOnError false
+        }
     }
     signingConfigs {
         release {
