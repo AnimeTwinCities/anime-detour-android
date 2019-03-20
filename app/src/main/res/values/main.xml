@@ -6,6 +6,7 @@
     <string name="main_menu_schedule">Schedule</string>
     <string name="main_menu_map">Hotel Map</string>
     <string name="main_menu_settings">Settings</string>
+    <string name="main_menu_privacy_policy">Privacy Policy</string>
 
     <color name="drawer_icon_color">@color/colorAccent</color>
     <color name="drawer_text_color">@color/colorAccent</color>

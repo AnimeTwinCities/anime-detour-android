@@ -1,32 +1,30 @@
 package org.animetwincities.animedetour.framework.dependencyinjection.module;
 
-import android.content.Context;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipeline;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.inkapplications.android.applicationlifecycle.ApplicationCallbacks;
-import com.inkapplications.android.applicationlifecycle.ApplicationLifecycleSubscriber;
-import com.inkapplications.logger.RxLogAdapter;
-import com.inkapplications.logger.RxLogger;
-import dagger.Module;
-import dagger.Provides;
-import inkapplicaitons.android.logger.CompositeLogger;
-import inkapplicaitons.android.logger.Logger;
-import okhttp3.Cache;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import org.animetwincities.animedetour.framework.AppConfig;
-import org.animetwincities.animedetour.framework.dependencyinjection.AvailableInDebug;
-import org.animetwincities.animedetour.framework.firebase.FirebaseLogger;
-import org.animetwincities.animedetour.framework.fresco.FrescoInitializer;
-import org.animetwincities.animedetour.framework.threeten.ThreeTenInitializer;
+import android.content.*;
 
-import javax.inject.Singleton;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+import com.facebook.drawee.backends.pipeline.*;
+import com.facebook.imagepipeline.core.*;
+import com.google.firebase.auth.*;
+import com.google.firebase.database.*;
+import com.google.firebase.remoteconfig.*;
+import com.inkapplications.android.applicationlifecycle.*;
+import com.inkapplications.logger.*;
+
+import org.animetwincities.animedetour.framework.*;
+import org.animetwincities.animedetour.framework.dependencyinjection.*;
+import org.animetwincities.animedetour.framework.firebase.*;
+import org.animetwincities.animedetour.framework.fresco.*;
+import org.animetwincities.animedetour.framework.threeten.*;
+
+import java.io.*;
+import java.util.*;
+
+import javax.inject.*;
+
+import dagger.*;
+import inkapplicaitons.android.logger.*;
+import inkapplicaitons.android.logger.Logger;
+import okhttp3.*;
 
 /**
  * Defines services provided by libraries brought into the project.

@@ -16,6 +16,7 @@ import org.animetwincities.animedetour.schedule.ScheduleFragment;
 
 import dagger.Subcomponent;
 import org.animetwincities.animedetour.settings.SettingsFragment;
+import org.animetwincities.animedetour.privacypolicy.PrivacyPolicyFragment;
 
 @ActivityScope
 @Subcomponent(
@@ -53,4 +54,5 @@ public interface ActivityComponent
     void inject(DayFragment target);
     void inject(FavoritesFragment target);
     void inject(SettingsFragment target);
+    void inject(PrivacyPolicyFragment target);
 }
