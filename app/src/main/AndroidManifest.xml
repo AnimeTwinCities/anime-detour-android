@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.animetwincities.animedetour">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.animetwincities.animedetour">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +14,11 @@
             android:theme="@style/AppTheme"
             android:name=".framework.AnimeDetourApplication">
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBdBsLmgR18zQ1DxiGIBNEDvwU1jbzzuxY"/>
+
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+
         <activity
                 android:name=".SplashActivity"
                 android:noHistory="true"

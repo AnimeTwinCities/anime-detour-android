@@ -1,14 +1,18 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     def specifiedVersionCode = project.hasProperty("versionCode") ? project.getProperty("versionCode") as Integer : 3013
     def specifiedVersionName = project.hasProperty("versionName") ? project.getProperty("versionName") as String : "3.1"
 
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "org.animetwincities.animedetour"
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode specifiedVersionCode
         versionName specifiedVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -57,55 +61,54 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:cardview-v7:25.2.0'
-    compile 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.7.6'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'net.opacapp:multiline-collapsingtoolbar:1.3.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.7.6'
 
-    compile 'com.google.firebase:firebase-core:10.2.1'
-    compile 'com.google.firebase:firebase-crash:10.2.1'
-    compile 'com.google.firebase:firebase-config:10.2.1'
-    compile 'com.google.firebase:firebase-database:10.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.1'
-    compile "com.google.android.gms:play-services-base:10.2.1"
-    compile "com.google.android.gms:play-services-maps:10.2.1"
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.google.firebase:firebase-config:16.4.0'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.0'
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.android.gms:play-services-maps:16.1.0"
 
-    compile 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    implementation 'com.google.dagger:dagger:2.17'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
 
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    compile 'frankiesardo:icepick:3.1.0'
-    annotationProcessor 'frankiesardo:icepick-processor:3.1.0'
+    implementation 'frankiesardo:icepick:3.2.0'
+    kapt 'frankiesardo:icepick-processor:3.2.0'
 
-    compile 'com.github.InkApplications:android-logger:4.1.0'
-    compile 'com.github.InkApplications:android-layout-injector:1.1.0'
-    compile 'com.github.InkApplications:guava-stopwatch:21.0'
-    compile 'com.github.InkApplications:android-application-lifecycle:1.0.1'
-    compile 'com.github.InkApplications:android-simple-recycler-view:v1.0.2'
+    implementation 'com.github.InkApplications:android-logger:4.1.0'
+    implementation 'com.github.InkApplications:android-layout-injector:1.1.0'
+    implementation 'com.github.InkApplications:guava-stopwatch:21.0'
+    implementation 'com.github.InkApplications:android-application-lifecycle:1.0.1'
+    implementation 'com.github.InkApplications:android-simple-recycler-view:v1.0.2'
 
-    compile 'com.facebook.fresco:fresco:1.1.0'
-    compile "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
+    implementation 'com.facebook.fresco:fresco:1.1.0'
+    implementation "com.facebook.fresco:imagepipeline-okhttp3:1.1.0"
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
 
-    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 
-    compile('com.mikepenz:materialdrawer:5.8.2@aar') {
-        transitive = true
-    }
+    implementation "com.mikepenz:materialdrawer:6.0.9"
 
-    debugCompile 'com.facebook.stetho:stetho:1.4.2'
-    debugCompile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 tasks.withType(Test) {
@@ -115,3 +118,15 @@ tasks.withType(Test) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+buildscript {
+    ext.kotlin_version = '1.3.21'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}

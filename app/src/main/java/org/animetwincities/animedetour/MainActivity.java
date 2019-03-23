@@ -13,6 +13,7 @@ import org.animetwincities.animedetour.framework.*;
 import org.animetwincities.animedetour.framework.dependencyinjection.*;
 import org.animetwincities.animedetour.guest.*;
 import org.animetwincities.animedetour.map.*;
+import org.animetwincities.animedetour.privacypolicy.PrivacyPolicyFragment;
 import org.animetwincities.animedetour.schedule.*;
 import org.animetwincities.animedetour.settings.*;
 
@@ -108,6 +109,12 @@ public class MainActivity extends BaseActivity
         return false;
     }
 
+    private boolean showPrivacyPolicy(View view, int i, IDrawerItem iDrawerItem) {
+        PrivacyPolicyFragment fragment = new PrivacyPolicyFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_fragment, fragment, MAIN_FRAGMENT_TAG).commit();
+        return false;
+    }
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG) instanceof ScheduleFragment) {
@@ -133,7 +140,8 @@ public class MainActivity extends BaseActivity
                 createNavigationItem(R.string.main_menu_guests, R.drawable.ic_people_black_24dp, this::showGuests),
                 createNavigationItem(R.string.main_menu_map, R.drawable.ic_map_black_24dp, this::showMap),
                 new DividerDrawerItem(),
-                createNavigationItem(R.string.main_menu_settings, R.drawable.ic_settings_black_24dp, this::showSettings)
+                createNavigationItem(R.string.main_menu_settings, R.drawable.ic_settings_black_24dp, this::showSettings),
+                    createNavigationItem(R.string.main_menu_privacy_policy, R.drawable.ic_lock_black_24dp, this::showPrivacyPolicy)
             )
             .withAccountHeader(
                 new AccountHeaderBuilder()
