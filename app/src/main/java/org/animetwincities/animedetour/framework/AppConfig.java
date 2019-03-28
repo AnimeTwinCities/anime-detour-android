@@ -132,7 +132,7 @@ public class AppConfig
     {
         HashMap<String, Object> defaults = new HashMap<>();
 
-        defaults.put(YEAR, "ad-2018");
+        defaults.put(YEAR, "ad-2019");
 
         return defaults;
     }
